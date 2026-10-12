@@ -36,7 +36,7 @@ jobs:
           echo "skipped: no licence (HACKOLADE_LICENSE secret is not set)"
           echo "### Hackolade stage skipped: no licence" >> "$GITHUB_STEP_SUMMARY"
           echo "Run \`make hk-stale\`, \`make hk-validate\` and \`make hk-diff\` locally before merging." >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         if: env.HAS_LICENCE == 'true'
         with:
           fetch-depth: 0
