@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enterprise-data-model"
+version = "0.6.0.dev0"
+description = "Layered Enterprise Data Model in Hackolade, with Python governance checks"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "EDM Team" }]
+keywords = ["hackolade", "enterprise-data-model", "edm", "data-architecture", "data-governance"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = ["pyyaml>=6.0"]
+
+[tool.setuptools]
+packages = []
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"

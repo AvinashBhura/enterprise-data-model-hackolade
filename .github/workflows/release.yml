@@ -1,0 +1,45 @@
+name: Release
+
+# On a version tag: DDL, JSON Schema and Markdown docs for every model, with a
+# manifest of the tag, commit, Studio and plugin versions (spec 0006, requirement 3).
+# Generated files are attached to the GitHub release, never committed (D4).
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      HK: docker compose -f ci/compose.yml run --rm hck
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - name: Stop if there is no licence
+        env:
+          HACKOLADE_LICENSE: ${{ secrets.HACKOLADE_LICENSE }}
+        run: |
+          if [ -z "$HACKOLADE_LICENSE" ]; then
+            echo "A release needs the HACKOLADE_LICENSE secret."; exit 1
+          fi
+      - name: Build the CLI image and check its plugins
+        run: |
+          docker compose -f ci/compose.yml build
+          $HK version | tee build-version.txt
+          python3 ci/check_plugins.py ci/plugins.txt < build-version.txt
+      - name: Validate the licence
+        env:
+          HACKOLADE_LICENSE: ${{ secrets.HACKOLADE_LICENSE }}
+        run: $HK validateKey --key="$HACKOLADE_LICENSE" --identifier="github-${{ github.run_id }}" --logLevel=1
+      - name: Generate
+        run: ci/hk.sh release "${{ github.ref_name }}"
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" --title "${{ github.ref_name }}" --generate-notes \
+            "build/release/edm-${{ github.ref_name }}.tar.gz" \
+            "build/release/${{ github.ref_name }}/manifest.json"

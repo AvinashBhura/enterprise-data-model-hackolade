@@ -1,0 +1,2512 @@
+{
+  "modelName": "Performance",
+  "collections": [
+    {
+      "GUID": "f376112e-78bc-5cc9-9a2d-618412d50c61",
+      "collectionName": "PerformanceReview",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "fb5144dc-44fa-58ae-895b-b32380173f22",
+          "name": "entity_id",
+          "isActivated": true,
+          "primaryKey": true,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The globally unique, system-generated surrogate identifier. Never changes over the lifetime of the entity. This is the stable join key used across every system, report, and integration that references this entity. Business keys (employee number, invoice number) may change; entity_id does not.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "semanticUri": "https://schema.org/identifier"
+        },
+        {
+          "GUID": "8ecf4da9-b42e-5f38-a15c-3f665c717f3f",
+          "name": "activity_type",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Top-level classifier (Meeting, Transaction, ProcessStep, Event, ...).",
+          "type": "string",
+          "childType": "enum",
+          "enum": [
+            "REVIEW"
+          ],
+          "valueDefinitions": "REVIEW: A periodic or ad-hoc review activity."
+        },
+        {
+          "GUID": "cfbc6f11-3989-55e4-ab8f-630b89af532b",
+          "name": "title",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Short human-readable title of the activity.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "c84c4fb1-3ce1-5f51-b705-89d3c459dece",
+          "name": "description",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Longer description of what the activity is or was.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "b2bc89a6-b84a-55e5-a6a4-3920f16a1d16",
+          "name": "scheduled_start",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the activity is/was scheduled to start.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "264ebd14-6220-5796-b166-773188a1ba94",
+          "name": "scheduled_end",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the activity is/was scheduled to end.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "f65d9d94-dc93-5f80-a098-85b4f2f45609",
+          "name": "actual_start",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the activity actually started.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "6b8df01d-90be-51c8-8d18-b51d21ef1f8a",
+          "name": "actual_end",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the activity actually ended.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "a62fbe3d-f155-54c6-b570-56ed7433db29",
+          "name": "participants",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Participants in this activity — Persons, Organizations, or Teams. Each is named by its entity type and entity_id, so any kind of party can take part.",
+          "type": "array",
+          "childType": "array",
+          "additionalItems": true,
+          "properties": [
+            {
+              "GUID": "fbb1ee9a-9ef7-5244-b6f7-a0c3f2ebea02",
+              "isActivated": true,
+              "primaryKey": false,
+              "required": false,
+              "compositeKey": [
+                "compositePrimaryKey",
+                "compositeUniqueKey"
+              ],
+              "compositePrimaryKey": false,
+              "compositeUniqueKey": false,
+              "error": {},
+              "type": "document",
+              "childType": "object",
+              "additionalProperties": false,
+              "properties": [
+                {
+                  "GUID": "0aa926bc-9f7e-5042-be42-07a016d8cf6d",
+                  "name": "participant_entity_type",
+                  "isActivated": true,
+                  "primaryKey": false,
+                  "required": true,
+                  "compositeKey": [
+                    "compositePrimaryKey",
+                    "compositeUniqueKey"
+                  ],
+                  "compositePrimaryKey": false,
+                  "compositeUniqueKey": false,
+                  "error": {},
+                  "description": "Entity type of the participant: one of Person, Organization, LegalEntity, OrganizationalUnit, Team, Role.",
+                  "type": "string",
+                  "childType": "enum",
+                  "enum": [
+                    "Person",
+                    "Organization",
+                    "LegalEntity",
+                    "OrganizationalUnit",
+                    "Team",
+                    "Role"
+                  ]
+                },
+                {
+                  "GUID": "76cb80a2-772b-5d96-830c-3a3c8e590a32",
+                  "name": "participant_entity_id",
+                  "isActivated": true,
+                  "primaryKey": false,
+                  "required": true,
+                  "compositeKey": [
+                    "compositePrimaryKey",
+                    "compositeUniqueKey"
+                  ],
+                  "compositePrimaryKey": false,
+                  "compositeUniqueKey": false,
+                  "error": {},
+                  "description": "entity_id of the participant.",
+                  "type": "string",
+                  "childType": "varchar",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                },
+                {
+                  "GUID": "57cf26ac-f301-541f-8db1-afa9e9849fff",
+                  "name": "participation_role",
+                  "isActivated": true,
+                  "primaryKey": false,
+                  "required": false,
+                  "compositeKey": [
+                    "compositePrimaryKey",
+                    "compositeUniqueKey"
+                  ],
+                  "compositePrimaryKey": false,
+                  "compositeUniqueKey": false,
+                  "error": {},
+                  "description": "Capacity in which this party took part (e.g. \"organizer\", \"attendee\", \"approver\").",
+                  "type": "string",
+                  "childType": "varchar"
+                }
+              ],
+              "arrayItem": true
+            }
+          ]
+        },
+        {
+          "GUID": "86b7f95b-abc0-52b9-b1b6-f375f471357c",
+          "name": "primary_actor_entity_type",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Entity type of primary actor: one of Person, Organization, LegalEntity, OrganizationalUnit, Team, Role. Polymorphic reference: no relationship (docs/patterns/polymorphic_references.md).",
+          "type": "string",
+          "childType": "enum",
+          "enum": [
+            "Person",
+            "Organization",
+            "LegalEntity",
+            "OrganizationalUnit",
+            "Team",
+            "Role"
+          ]
+        },
+        {
+          "GUID": "959f900a-4a47-54c7-997c-e4c62225a651",
+          "name": "primary_actor_entity_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The primary performer of the activity (Person or Organization).",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        {
+          "GUID": "2241ca35-46e1-5a1a-838f-6dc4579aaa64",
+          "name": "location",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Location where the activity takes place. May reference an Address or Room via entity_id, or be a free-text descriptor (e.g., \"Zoom\", \"HQ Main Auditorium\").",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "d7332d7c-dc8a-55a8-965d-975287b96b27",
+          "name": "outcome",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Short summary of the activity's outcome.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "c52ff668-b620-525b-98a0-6daa90919fa4",
+          "name": "natural_identifiers",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Zero or more natural (business) keys that identify this entity. Each carries its own scheme and issuer so multiple identifier systems can coexist without conflict.",
+          "type": "array",
+          "childType": "array",
+          "additionalItems": true,
+          "properties": [
+            {
+              "GUID": "f8371d3e-c53e-5b8d-87ef-7cb6d8950ea7",
+              "type": "reference",
+              "$ref": "#external/definitions/NaturalIdentifier",
+              "refType": "external",
+              "ref": "6800298d-7dad-59c7-bd04-58d44d386b17",
+              "refIdPath": [
+                "b13f0824-0846-57f5-83f7-821a97e6a8dc",
+                "42250a28-0a68-5c7f-b773-8c96333e2e89",
+                "6800298d-7dad-59c7-bd04-58d44d386b17"
+              ],
+              "isActivated": true,
+              "compositeKey": [
+                "compositePrimaryKey",
+                "compositeUniqueKey"
+              ],
+              "compositePrimaryKey": false,
+              "compositeUniqueKey": false,
+              "error": {
+                "refPath": false
+              },
+              "displayName": "NaturalIdentifier",
+              "arrayItem": true
+            }
+          ]
+        },
+        {
+          "GUID": "191da351-1954-5a1b-ba63-c2338fb6f170",
+          "name": "created_at",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Timestamp when this entity record was created.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "39dd809a-20c5-5129-b991-fdceaced23ed",
+          "name": "created_by",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Actor who created this entity record. May be a user identifier, system identifier, or service account name.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "416cb295-7b68-5f5c-9351-2c1621e1a5e3",
+          "name": "last_modified_at",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Timestamp of last modification to this entity record.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "cb2d15fc-0012-5528-ae00-091b1404b3a3",
+          "name": "last_modified_by",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Actor who last modified this entity record.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "a72bbf42-d3e5-5435-9bad-75f3921ac7e9",
+          "name": "lifecycle_state",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Current lifecycle state of the entity. Each entity has its own list of states, held on this attribute with the meaning of each value (D3).",
+          "type": "string",
+          "childType": "enum",
+          "enum": [
+            "PLANNED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "CANCELLED",
+            "FAILED",
+            "ON_HOLD",
+            "ARCHIVED"
+          ],
+          "valueDefinitions": "PLANNED: Scheduled but not yet started.\nIN_PROGRESS: Currently in progress.\nCOMPLETED: Completed successfully.\nCANCELLED: Cancelled before completion.\nFAILED: Ended without achieving its purpose.\nON_HOLD: Paused; may resume later.\nARCHIVED: Completed and archived."
+        },
+        {
+          "GUID": "c37ac54c-1d59-520d-b2c7-3a0378ca2eec",
+          "name": "state_effective_from",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the current lifecycle state became effective.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "c2dc82b5-ae78-599d-9adf-270c692ef161",
+          "name": "state_effective_to",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the current lifecycle state ceases to be effective (if known).",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "7fe8f6bd-97f0-57d8-bf9b-1007d47e706b",
+          "name": "state_history",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Immutable history of lifecycle state transitions. Appended to on every state change; never mutated in place.",
+          "type": "array",
+          "childType": "array",
+          "additionalItems": true,
+          "properties": [
+            {
+              "GUID": "3f4a704a-1bf8-5d5d-97f6-3c8de3a70975",
+              "type": "reference",
+              "$ref": "#external/definitions/StateTransition",
+              "refType": "external",
+              "ref": "0a35c238-d4a4-5d3f-a3a3-cf9d5ae418d5",
+              "refIdPath": [
+                "b13f0824-0846-57f5-83f7-821a97e6a8dc",
+                "42250a28-0a68-5c7f-b773-8c96333e2e89",
+                "0a35c238-d4a4-5d3f-a3a3-cf9d5ae418d5"
+              ],
+              "isActivated": true,
+              "compositeKey": [
+                "compositePrimaryKey",
+                "compositeUniqueKey"
+              ],
+              "compositePrimaryKey": false,
+              "compositeUniqueKey": false,
+              "error": {
+                "refPath": false
+              },
+              "displayName": "StateTransition",
+              "arrayItem": true
+            }
+          ]
+        },
+        {
+          "GUID": "fadbfc7f-91e4-50fd-9409-577322ec9fc5",
+          "name": "valid_from",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Start of the real-world validity period.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "fe0bd364-4581-5fc5-8179-46556fea15eb",
+          "name": "valid_to",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "End of the real-world validity period (open-ended if absent).",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "b7aad09d-fadf-53c2-a548-2ee5202444de",
+          "name": "recorded_from",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When this record began to exist in the system.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "b573edf7-8e6f-51dc-a05c-80d8ecb5e8f6",
+          "name": "recorded_to",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When this record ceased to exist in the system (if superseded).",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "a4e946a2-497b-58a4-8f52-f5fff53c93f6",
+          "name": "reviewee_role",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+          "foreignField": [
+            "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+            "6d8d81fb-8922-592d-b789-a74a1384554b",
+            "84cd5f4f-1ed7-5e59-a714-4d92c50a6d09"
+          ],
+          "parentRelationship": "f31f2e79-a044-5026-a42a-984eff1aca02"
+        },
+        {
+          "GUID": "a6bd3c40-9666-52ab-bbbd-fb9ca61985f0",
+          "name": "reviewer_role",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+          "foreignField": [
+            "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+            "6d8d81fb-8922-592d-b789-a74a1384554b",
+            "84cd5f4f-1ed7-5e59-a714-4d92c50a6d09"
+          ],
+          "parentRelationship": "5caeb1d7-5fbe-5f53-a93b-0e7a755b05e7"
+        },
+        {
+          "GUID": "6c96c4e5-934a-5493-b087-4c7bef3228c5",
+          "name": "review_period_start",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "date"
+        },
+        {
+          "GUID": "d1fd430b-d98d-5ad9-bab3-ccee7437a9ac",
+          "name": "review_period_end",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "date"
+        },
+        {
+          "GUID": "e93e6783-1a28-5088-b3ee-6068064a6e5c",
+          "name": "cycle_identifier",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "5ce870f6-f04f-58a7-942c-1419ceabeb36",
+          "name": "overall_rating",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "4896b1f0-3073-5bd5-a90b-1458a6b41f27",
+          "name": "strengths",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "101d95e6-1843-5611-ad0b-09eedc8f88e1",
+          "name": "development_areas",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "8b38829d-2e03-5cca-8468-2be11bef073a",
+          "name": "goals_for_next_period",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "varchar"
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "71f93d9a-c273-55b2-b49f-d54622d14c27"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "17d6000d-5d17-5173-be2b-0f553e14df0d",
+      "description": "A periodic performance evaluation event for an employee.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Domain",
+      "foundationKind": "Activity",
+      "entityType": "Core",
+      "steward": "Head of Performance & Talent",
+      "edmComposes": [
+        "Entity",
+        "Identifiable",
+        "Lifecycleable",
+        "Temporal",
+        "Classifiable"
+      ]
+    },
+    {
+      "GUID": "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+      "type": "reference",
+      "$ref": "#external/definitions/EmployeeRole",
+      "refType": "polyglot",
+      "ref": "6d8d81fb-8922-592d-b789-a74a1384554b",
+      "refIdPath": [
+        "b13f0824-0846-57f5-83f7-821a97e6a8dc",
+        "0ad1958f-8fe0-58c2-8994-d45f822e9bb9",
+        "6d8d81fb-8922-592d-b789-a74a1384554b"
+      ],
+      "isActivated": true,
+      "collectionName": "EmployeeRole",
+      "bucketId": "273ca889-37b2-5ccb-b954-2a9c1c5d5b8d",
+      "properties": [],
+      "definitions": {
+        "properties": [],
+        "GUID": "22db4382-25d4-514e-8f71-111bfc82bf5b"
+      },
+      "additionalProperties": false,
+      "error": {
+        "refPath": false
+      },
+      "description": "A Person's engagement as an employee.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "referenceDiff": {
+        "properties": [
+          {
+            "GUID": "84cd5f4f-1ed7-5e59-a714-4d92c50a6d09",
+            "childRelationships": [
+              "f31f2e79-a044-5026-a42a-984eff1aca02",
+              "5caeb1d7-5fbe-5f53-a93b-0e7a755b05e7"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "buckets": [
+    {
+      "name": "Performance",
+      "type": "bucket",
+      "collectionIds": [
+        "f376112e-78bc-5cc9-9a2d-618412d50c61"
+      ],
+      "backgroundColor": {
+        "r": 0,
+        "g": 188,
+        "b": 212,
+        "a": 1
+      },
+      "show": true,
+      "isActivated": true,
+      "GUID": "17d6000d-5d17-5173-be2b-0f553e14df0d",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "description": "HR subdomain Performance Management. Origin of PerformanceReview."
+    },
+    {
+      "GUID": "273ca889-37b2-5ccb-b954-2a9c1c5d5b8d",
+      "name": "CoreHR",
+      "type": "reference",
+      "$ref": "#external/definitions/CoreHR",
+      "refType": "polyglot",
+      "ref": "a986497a-01f2-5497-94d8-96d48334a239",
+      "refIdPath": [
+        "b13f0824-0846-57f5-83f7-821a97e6a8dc",
+        "0ad1958f-8fe0-58c2-8994-d45f822e9bb9",
+        "a986497a-01f2-5497-94d8-96d48334a239"
+      ],
+      "isActivated": true,
+      "backgroundColor": {
+        "r": 0,
+        "g": 188,
+        "b": 212,
+        "a": 1
+      },
+      "show": true,
+      "collectionIds": [
+        "5c2b15ae-4aaa-5667-9ceb-1942f3de880f"
+      ]
+    }
+  ],
+  "views": [],
+  "relationships": [
+    {
+      "name": "fk_performance_review_reviewee_role",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+          "6d8d81fb-8922-592d-b789-a74a1384554b",
+          "84cd5f4f-1ed7-5e59-a714-4d92c50a6d09"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "f376112e-78bc-5cc9-9a2d-618412d50c61",
+          "a4e946a2-497b-58a4-8f52-f5fff53c93f6"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "f31f2e79-a044-5026-a42a-984eff1aca02",
+      "parentCollection": "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+      "childCollection": "f376112e-78bc-5cc9-9a2d-618412d50c61",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    },
+    {
+      "name": "fk_performance_review_reviewer_role",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+          "6d8d81fb-8922-592d-b789-a74a1384554b",
+          "84cd5f4f-1ed7-5e59-a714-4d92c50a6d09"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "f376112e-78bc-5cc9-9a2d-618412d50c61",
+          "a6bd3c40-9666-52ab-bbbd-fb9ca61985f0"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "5caeb1d7-5fbe-5f53-a93b-0e7a755b05e7",
+      "parentCollection": "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+      "childCollection": "f376112e-78bc-5cc9-9a2d-618412d50c61",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    }
+  ],
+  "users": [],
+  "diagramViews": [],
+  "idToNameHashTable": {
+    "f376112e-78bc-5cc9-9a2d-618412d50c61": "PerformanceReview",
+    "fb5144dc-44fa-58ae-895b-b32380173f22": "entity_id",
+    "8ecf4da9-b42e-5f38-a15c-3f665c717f3f": "activity_type",
+    "cfbc6f11-3989-55e4-ab8f-630b89af532b": "title",
+    "c84c4fb1-3ce1-5f51-b705-89d3c459dece": "description",
+    "b2bc89a6-b84a-55e5-a6a4-3920f16a1d16": "scheduled_start",
+    "264ebd14-6220-5796-b166-773188a1ba94": "scheduled_end",
+    "f65d9d94-dc93-5f80-a098-85b4f2f45609": "actual_start",
+    "6b8df01d-90be-51c8-8d18-b51d21ef1f8a": "actual_end",
+    "a62fbe3d-f155-54c6-b570-56ed7433db29": "participants",
+    "0aa926bc-9f7e-5042-be42-07a016d8cf6d": "participant_entity_type",
+    "76cb80a2-772b-5d96-830c-3a3c8e590a32": "participant_entity_id",
+    "57cf26ac-f301-541f-8db1-afa9e9849fff": "participation_role",
+    "86b7f95b-abc0-52b9-b1b6-f375f471357c": "primary_actor_entity_type",
+    "959f900a-4a47-54c7-997c-e4c62225a651": "primary_actor_entity_id",
+    "2241ca35-46e1-5a1a-838f-6dc4579aaa64": "location",
+    "d7332d7c-dc8a-55a8-965d-975287b96b27": "outcome",
+    "c52ff668-b620-525b-98a0-6daa90919fa4": "natural_identifiers",
+    "f8371d3e-c53e-5b8d-87ef-7cb6d8950ea7": "NaturalIdentifier",
+    "191da351-1954-5a1b-ba63-c2338fb6f170": "created_at",
+    "39dd809a-20c5-5129-b991-fdceaced23ed": "created_by",
+    "416cb295-7b68-5f5c-9351-2c1621e1a5e3": "last_modified_at",
+    "cb2d15fc-0012-5528-ae00-091b1404b3a3": "last_modified_by",
+    "a72bbf42-d3e5-5435-9bad-75f3921ac7e9": "lifecycle_state",
+    "c37ac54c-1d59-520d-b2c7-3a0378ca2eec": "state_effective_from",
+    "c2dc82b5-ae78-599d-9adf-270c692ef161": "state_effective_to",
+    "7fe8f6bd-97f0-57d8-bf9b-1007d47e706b": "state_history",
+    "3f4a704a-1bf8-5d5d-97f6-3c8de3a70975": "StateTransition",
+    "fadbfc7f-91e4-50fd-9409-577322ec9fc5": "valid_from",
+    "fe0bd364-4581-5fc5-8179-46556fea15eb": "valid_to",
+    "b7aad09d-fadf-53c2-a548-2ee5202444de": "recorded_from",
+    "b573edf7-8e6f-51dc-a05c-80d8ecb5e8f6": "recorded_to",
+    "a4e946a2-497b-58a4-8f52-f5fff53c93f6": "reviewee_role",
+    "a6bd3c40-9666-52ab-bbbd-fb9ca61985f0": "reviewer_role",
+    "6c96c4e5-934a-5493-b087-4c7bef3228c5": "review_period_start",
+    "d1fd430b-d98d-5ad9-bab3-ccee7437a9ac": "review_period_end",
+    "e93e6783-1a28-5088-b3ee-6068064a6e5c": "cycle_identifier",
+    "5ce870f6-f04f-58a7-942c-1419ceabeb36": "overall_rating",
+    "4896b1f0-3073-5bd5-a90b-1458a6b41f27": "strengths",
+    "101d95e6-1843-5611-ad0b-09eedc8f88e1": "development_areas",
+    "8b38829d-2e03-5cca-8468-2be11bef073a": "goals_for_next_period",
+    "5c2b15ae-4aaa-5667-9ceb-1942f3de880f": "EmployeeRole",
+    "17d6000d-5d17-5173-be2b-0f553e14df0d": "Performance",
+    "273ca889-37b2-5ccb-b954-2a9c1c5d5b8d": "CoreHR",
+    "f31f2e79-a044-5026-a42a-984eff1aca02": "fk_performance_review_reviewee_role",
+    "5caeb1d7-5fbe-5f53-a93b-0e7a755b05e7": "fk_performance_review_reviewer_role",
+    "a986497a-01f2-5497-94d8-96d48334a239": "CoreHR",
+    "6d8d81fb-8922-592d-b789-a74a1384554b": "EmployeeRole",
+    "84cd5f4f-1ed7-5e59-a714-4d92c50a6d09": "entity_id",
+    "fb2dfaed-ae8b-50cf-a4b3-f2e52395ba15": "role_type",
+    "c4fd5ff1-ab91-56b8-a486-3d64a0c71456": "held_by_person",
+    "37529bd0-39f8-52d7-8581-877897ce8123": "held_by_organization_entity_type",
+    "705b1a4f-647a-5d97-8c4b-75a76cd28233": "held_by_organization_entity_id",
+    "3a892775-9075-56e1-a689-6da39e3d8259": "engaging_party_entity_type",
+    "544dfcff-c706-56d4-a559-74dd6d703e99": "engaging_party_entity_id",
+    "f2c6be3e-4f42-59b9-9005-89c6d4b4e156": "role_title",
+    "0164d725-b642-5f53-8d40-6752e85df073": "effective_from",
+    "f9de5271-370a-5624-8885-77786dab400d": "effective_to",
+    "8e7e6393-2ea5-58f9-b966-aa82e788c5e6": "end_reason",
+    "e9430e94-c0b6-5552-83d6-153b654ea7fa": "authority_level",
+    "05826185-e6dc-5d46-b719-9dafbc25459c": "natural_identifiers",
+    "d3ad5ae5-a91d-5159-ab5e-ed3eafb75aa3": "value",
+    "29857fd0-e389-51c9-aad6-f0784a076a83": "scheme",
+    "09180abc-078d-5de0-a8c9-5070ffb0a69a": "issuer",
+    "cf34a08e-98d6-522b-bfb5-bf6545fbc8fc": "issued_at",
+    "5432f815-78f8-5cff-994f-d62e082a69be": "valid_from",
+    "fa4c4b55-a944-52ee-8839-1adbeaff4996": "valid_to",
+    "58129585-6d32-57e5-9eae-00fc75392867": "created_at",
+    "ffc28c14-7e0b-5d61-9ef9-ee099d054a73": "created_by",
+    "afc1ccf7-11fc-53ee-8af6-8e41c223b686": "last_modified_at",
+    "c65ca8a5-2020-5065-add2-79cca0af4dfd": "last_modified_by",
+    "9d178763-2137-54d3-b718-fffd673841d2": "lifecycle_state",
+    "3c7c45c6-981b-5924-9b2f-8bf5f67c5f96": "state_effective_from",
+    "040451fa-b5e4-53f3-862f-3d0382fda1a1": "state_effective_to",
+    "48a47a5d-0e47-51dc-bd05-c135fd9d8d12": "state_history",
+    "cd351bc6-ef0c-512b-9496-2de311e80fd2": "from_state",
+    "bee2f808-2234-5128-91af-11fa63865fcd": "to_state",
+    "1794b606-2f2a-5d1c-a6b8-c012dff34923": "transition_timestamp",
+    "21858417-f421-534f-889d-8ce3f427c880": "transitioned_by_entity_type",
+    "2d07d0f6-1021-5353-a4bd-24c4b1a693ec": "transitioned_by_entity_id",
+    "76a5b432-a2db-54dd-9c09-5033292cde58": "reason",
+    "bde3179e-c257-5ca3-8c56-db02bb28f0a6": "valid_from",
+    "ace1efe5-d503-59ae-b8a0-157487768db8": "valid_to",
+    "a34e5927-f047-5ae7-9daa-32e8aedf5226": "recorded_from",
+    "7760cde8-4a2a-571e-b355-de5422298a6d": "recorded_to",
+    "ce7751a7-acea-528e-9f8a-71d62949cd6c": "employee_number",
+    "233b7788-fd89-5a33-9fee-7c9991ce1e33": "employing_organization_entity_type",
+    "72f5ed68-bdb6-5eff-8406-c1572d9c3d2c": "employing_organization_entity_id",
+    "2c268d8e-fcc1-57f5-9606-e04e7d470fb4": "employing_legal_entity",
+    "fbf259c1-6817-572a-982e-4e79694ef917": "hire_date",
+    "0d2ebfe4-e538-50b2-a15b-eaca04e2d431": "separation_date",
+    "5eab0ce7-7593-5360-955c-edf7a886d86c": "separation_reason",
+    "153216bf-3123-5981-8436-9a163b66eec2": "employment_type",
+    "d6ac50f1-51ca-582c-a372-27e819879d30": "primary_position",
+    "7553d973-183b-5e43-895a-5e525623bf4c": "additional_positions",
+    "3005f0a4-d61e-5207-b0b0-5cb0324a7a07": "employment_contract",
+    "bfcab12a-650b-597a-b0d3-d8d9862660c6": "compensation_package",
+    "3545a6b6-cfad-5466-945a-621d1423fc1d": "manager_role",
+    "f6be7600-c4b4-57e8-8d63-1831d88ce341": "work_email",
+    "9f3d9c62-39de-584e-8fe0-4837c0a21275": "work_phone",
+    "fc1addc5-bd06-549f-a240-645df06aeac8": "job_title"
+  },
+  "definitions": {
+    "type": "definitions",
+    "properties": [],
+    "GUID": "89be79be-6e67-5e1b-9569-52009e09572a"
+  },
+  "polyglotDefinitions": {
+    "type": "polyglotDefinitions",
+    "properties": [
+      {
+        "name": "CoreHR",
+        "type": "bucket",
+        "backgroundColor": {
+          "r": 0,
+          "g": 188,
+          "b": 212,
+          "a": 1
+        },
+        "show": true,
+        "isActivated": true,
+        "GUID": "a986497a-01f2-5497-94d8-96d48334a239",
+        "hackoladeMeta": {
+          "validationErrors": {}
+        },
+        "description": "HR subdomain Core HR (D7: formerly PeopleServices). Origin of the employment roles, the employment contract and onboarding checklists.",
+        "collectionIds": [
+          "6d8d81fb-8922-592d-b789-a74a1384554b"
+        ],
+        "definitionEntityType": "bucket",
+        "fileType": "hackoladeSchema",
+        "definitionRefs": [
+          [
+            "273ca889-37b2-5ccb-b954-2a9c1c5d5b8d"
+          ]
+        ],
+        "kind": "relativePath",
+        "link": "../CoreHR/CoreHR.hck.json",
+        "fieldRelativePath": "#/CoreHR"
+      },
+      {
+        "GUID": "6d8d81fb-8922-592d-b789-a74a1384554b",
+        "collectionName": "EmployeeRole",
+        "type": "object",
+        "properties": [
+          {
+            "GUID": "84cd5f4f-1ed7-5e59-a714-4d92c50a6d09",
+            "name": "entity_id",
+            "isActivated": true,
+            "primaryKey": true,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The globally unique, system-generated surrogate identifier. Never changes over the lifetime of the entity. This is the stable join key used across every system, report, and integration that references this entity. Business keys (employee number, invoice number) may change; entity_id does not.",
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "semanticUri": "https://schema.org/identifier"
+          },
+          {
+            "GUID": "fb2dfaed-ae8b-50cf-a4b3-f2e52395ba15",
+            "name": "role_type",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The kind of role. Each Domain specialization binds to a specific value (e.g., EmployeeRole → EMPLOYEE).",
+            "type": "string",
+            "childType": "enum",
+            "enum": [
+              "EMPLOYEE"
+            ],
+            "valueDefinitions": "EMPLOYEE: A Person engaged as a paid employee."
+          },
+          {
+            "GUID": "c4fd5ff1-ab91-56b8-a486-3d64a0c71456",
+            "name": "held_by_person",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The Person who holds this role. Populated when the role is held by a human (employment, visit, board membership).",
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "37529bd0-39f8-52d7-8581-877897ce8123",
+            "name": "held_by_organization_entity_type",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Entity type of held by organization: one of LegalEntity, OrganizationalUnit. Polymorphic reference: no relationship (docs/patterns/polymorphic_references.md).",
+            "type": "string",
+            "childType": "enum",
+            "enum": [
+              "LegalEntity",
+              "OrganizationalUnit"
+            ]
+          },
+          {
+            "GUID": "705b1a4f-647a-5d97-8c4b-75a76cd28233",
+            "name": "held_by_organization_entity_id",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The Organization holding this role. Populated when the role is held by an organization (e.g., a corporate vendor role, partner organization role).",
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "3a892775-9075-56e1-a689-6da39e3d8259",
+            "name": "engaging_party_entity_type",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Entity type of engaging party: one of Person, Organization, LegalEntity, OrganizationalUnit, Team. Polymorphic reference: no relationship (docs/patterns/polymorphic_references.md).",
+            "type": "string",
+            "childType": "enum",
+            "enum": [
+              "Person",
+              "Organization",
+              "LegalEntity",
+              "OrganizationalUnit",
+              "Team"
+            ]
+          },
+          {
+            "GUID": "544dfcff-c706-56d4-a559-74dd6d703e99",
+            "name": "engaging_party_entity_id",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The party on the other side of the engagement — typically the Organization (or Team) that the holder is engaged with.",
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "f2c6be3e-4f42-59b9-9005-89c6d4b4e156",
+            "name": "role_title",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Human-readable title (e.g., \"Senior Engineer\", \"Chair\").",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "0164d725-b642-5f53-8d40-6752e85df073",
+            "name": "effective_from",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Start of the role engagement.",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "f9de5271-370a-5624-8885-77786dab400d",
+            "name": "effective_to",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "End of the role engagement (null if ongoing).",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "8e7e6393-2ea5-58f9-b966-aa82e788c5e6",
+            "name": "end_reason",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Reason the role ended (resignation, separation, end-of-contract).",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "e9430e94-c0b6-5552-83d6-153b654ea7fa",
+            "name": "authority_level",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Optional authority/seniority indicator (e.g., \"signatory\", \"approver\", \"contributor\"). Specialization classes may narrow this to controlled values.",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "05826185-e6dc-5d46-b719-9dafbc25459c",
+            "name": "natural_identifiers",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Zero or more natural (business) keys that identify this entity. Each carries its own scheme and issuer so multiple identifier systems can coexist without conflict.",
+            "type": "array",
+            "childType": "array",
+            "additionalItems": true,
+            "properties": [
+              {
+                "GUID": "e6191d41-b80e-5c65-8140-e880f9c54b74",
+                "type": "document",
+                "isActivated": true,
+                "compositeKey": [
+                  "compositePrimaryKey",
+                  "compositeUniqueKey"
+                ],
+                "compositePrimaryKey": false,
+                "compositeUniqueKey": false,
+                "arrayItem": true,
+                "childType": "object",
+                "additionalProperties": false,
+                "properties": [
+                  {
+                    "GUID": "d3ad5ae5-a91d-5159-ab5e-ed3eafb75aa3",
+                    "name": "value",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": true,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "The identifier value itself.",
+                    "type": "string",
+                    "childType": "varchar"
+                  },
+                  {
+                    "GUID": "29857fd0-e389-51c9-aad6-f0784a076a83",
+                    "name": "scheme",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": true,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "The naming/numbering scheme. Examples: \"employee_number\", \"tax_id\", \"iso_country_code\", \"ein\", \"ssn\".",
+                    "type": "string",
+                    "childType": "varchar"
+                  },
+                  {
+                    "GUID": "09180abc-078d-5de0-a8c9-5070ffb0a69a",
+                    "name": "issuer",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": false,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "The authority that issued this identifier. Examples: \"Acme HR\", \"IRS\", \"ISO\", \"National Social Security Administration\".",
+                    "type": "string",
+                    "childType": "varchar"
+                  },
+                  {
+                    "GUID": "cf34a08e-98d6-522b-bfb5-bf6545fbc8fc",
+                    "name": "issued_at",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": false,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "When the identifier was issued (if known).",
+                    "type": "string",
+                    "childType": "date"
+                  },
+                  {
+                    "GUID": "5432f815-78f8-5cff-994f-d62e082a69be",
+                    "name": "valid_from",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": false,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "When this identifier becomes effective.",
+                    "type": "string",
+                    "childType": "date"
+                  },
+                  {
+                    "GUID": "fa4c4b55-a944-52ee-8839-1adbeaff4996",
+                    "name": "valid_to",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": false,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "When this identifier ceases to be effective (for reissued keys).",
+                    "type": "string",
+                    "childType": "date"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "GUID": "58129585-6d32-57e5-9eae-00fc75392867",
+            "name": "created_at",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Timestamp when this entity record was created.",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "ffc28c14-7e0b-5d61-9ef9-ee099d054a73",
+            "name": "created_by",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Actor who created this entity record. May be a user identifier, system identifier, or service account name.",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "afc1ccf7-11fc-53ee-8af6-8e41c223b686",
+            "name": "last_modified_at",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Timestamp of last modification to this entity record.",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "c65ca8a5-2020-5065-add2-79cca0af4dfd",
+            "name": "last_modified_by",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Actor who last modified this entity record.",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "9d178763-2137-54d3-b718-fffd673841d2",
+            "name": "lifecycle_state",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Current lifecycle state of the entity. Each entity has its own list of states, held on this attribute with the meaning of each value (D3).",
+            "type": "string",
+            "childType": "enum",
+            "enum": [
+              "OFFER_EXTENDED",
+              "OFFER_ACCEPTED",
+              "PENDING_START",
+              "ONBOARDING",
+              "ACTIVE",
+              "ON_LEAVE",
+              "SUSPENDED",
+              "NOTICE",
+              "OFFBOARDING",
+              "SEPARATED",
+              "RETIRED",
+              "RESCINDED"
+            ],
+            "valueDefinitions": "OFFER_EXTENDED\nOFFER_ACCEPTED\nPENDING_START\nONBOARDING\nACTIVE\nON_LEAVE\nSUSPENDED\nNOTICE\nOFFBOARDING\nSEPARATED\nRETIRED\nRESCINDED"
+          },
+          {
+            "GUID": "3c7c45c6-981b-5924-9b2f-8bf5f67c5f96",
+            "name": "state_effective_from",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "When the current lifecycle state became effective.",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "040451fa-b5e4-53f3-862f-3d0382fda1a1",
+            "name": "state_effective_to",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "When the current lifecycle state ceases to be effective (if known).",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "48a47a5d-0e47-51dc-bd05-c135fd9d8d12",
+            "name": "state_history",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Immutable history of lifecycle state transitions. Appended to on every state change; never mutated in place.",
+            "type": "array",
+            "childType": "array",
+            "additionalItems": true,
+            "properties": [
+              {
+                "GUID": "a82c5376-7e63-58d3-b8ef-fe00d96563ca",
+                "type": "document",
+                "isActivated": true,
+                "compositeKey": [
+                  "compositePrimaryKey",
+                  "compositeUniqueKey"
+                ],
+                "compositePrimaryKey": false,
+                "compositeUniqueKey": false,
+                "arrayItem": true,
+                "childType": "object",
+                "additionalProperties": false,
+                "properties": [
+                  {
+                    "GUID": "cd351bc6-ef0c-512b-9496-2de311e80fd2",
+                    "name": "from_state",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": true,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "The prior lifecycle state (as enum string value).",
+                    "type": "string",
+                    "childType": "varchar"
+                  },
+                  {
+                    "GUID": "bee2f808-2234-5128-91af-11fa63865fcd",
+                    "name": "to_state",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": true,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "The new lifecycle state (as enum string value).",
+                    "type": "string",
+                    "childType": "varchar"
+                  },
+                  {
+                    "GUID": "1794b606-2f2a-5d1c-a6b8-c012dff34923",
+                    "name": "transition_timestamp",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": true,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "When the transition occurred.",
+                    "type": "string",
+                    "childType": "timestamp_tz"
+                  },
+                  {
+                    "GUID": "21858417-f421-534f-889d-8ce3f427c880",
+                    "name": "transitioned_by_entity_type",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": false,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "Entity type of transitioned by: one of Person, Role, Team. Polymorphic reference: no relationship (docs/patterns/polymorphic_references.md).",
+                    "type": "string",
+                    "childType": "enum",
+                    "enum": [
+                      "Person",
+                      "Role",
+                      "Team"
+                    ]
+                  },
+                  {
+                    "GUID": "2d07d0f6-1021-5353-a4bd-24c4b1a693ec",
+                    "name": "transitioned_by_entity_id",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": false,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "The actor responsible for the transition. Typically references a Person (via their entity_id), but may be a system/service account in automated transitions.",
+                    "type": "string",
+                    "childType": "varchar",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  },
+                  {
+                    "GUID": "76a5b432-a2db-54dd-9c09-5033292cde58",
+                    "name": "reason",
+                    "isActivated": true,
+                    "primaryKey": false,
+                    "required": false,
+                    "compositeKey": [
+                      "compositePrimaryKey",
+                      "compositeUniqueKey"
+                    ],
+                    "compositePrimaryKey": false,
+                    "compositeUniqueKey": false,
+                    "error": {},
+                    "description": "Free-text reason or note explaining the transition.",
+                    "type": "string",
+                    "childType": "varchar"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "GUID": "bde3179e-c257-5ca3-8c56-db02bb28f0a6",
+            "name": "valid_from",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Start of the real-world validity period.",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "ace1efe5-d503-59ae-b8a0-157487768db8",
+            "name": "valid_to",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "End of the real-world validity period (open-ended if absent).",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "a34e5927-f047-5ae7-9daa-32e8aedf5226",
+            "name": "recorded_from",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "When this record began to exist in the system.",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "7760cde8-4a2a-571e-b355-de5422298a6d",
+            "name": "recorded_to",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "When this record ceased to exist in the system (if superseded).",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "ce7751a7-acea-528e-9f8a-71d62949cd6c",
+            "name": "employee_number",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Enterprise-issued employee number — natural key scoped to this role.",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "233b7788-fd89-5a33-9fee-7c9991ce1e33",
+            "name": "employing_organization_entity_type",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Entity type of employing organization: one of LegalEntity, OrganizationalUnit. Polymorphic reference: no relationship (docs/patterns/polymorphic_references.md).",
+            "type": "string",
+            "childType": "enum",
+            "enum": [
+              "LegalEntity",
+              "OrganizationalUnit"
+            ]
+          },
+          {
+            "GUID": "72f5ed68-bdb6-5eff-8406-c1572d9c3d2c",
+            "name": "employing_organization_entity_id",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "2c268d8e-fcc1-57f5-9606-e04e7d470fb4",
+            "name": "employing_legal_entity",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "LegalEntity that legally employs the Person.",
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "fbf259c1-6817-572a-982e-4e79694ef917",
+            "name": "hire_date",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "date"
+          },
+          {
+            "GUID": "0d2ebfe4-e538-50b2-a15b-eaca04e2d431",
+            "name": "separation_date",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "date"
+          },
+          {
+            "GUID": "5eab0ce7-7593-5360-955c-edf7a886d86c",
+            "name": "separation_reason",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "153216bf-3123-5981-8436-9a163b66eec2",
+            "name": "employment_type",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "enum",
+            "enum": [
+              "FULL_TIME",
+              "PART_TIME",
+              "TEMPORARY",
+              "INTERN",
+              "APPRENTICE",
+              "SEASONAL",
+              "CASUAL"
+            ],
+            "valueDefinitions": "FULL_TIME: Full-time permanent employee.\nPART_TIME: Part-time permanent employee.\nTEMPORARY: Fixed-term employee.\nINTERN: Internship arrangement.\nAPPRENTICE: Apprenticeship arrangement.\nSEASONAL: Seasonal worker.\nCASUAL: Casual / on-call worker."
+          },
+          {
+            "GUID": "d6ac50f1-51ca-582c-a372-27e819879d30",
+            "name": "primary_position",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "7553d973-183b-5e43-895a-5e525623bf4c",
+            "name": "additional_positions",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "array",
+            "childType": "array",
+            "additionalItems": true,
+            "properties": [
+              {
+                "GUID": "8f2ac88e-67cd-51a0-a769-7a71c629b984",
+                "isActivated": true,
+                "primaryKey": false,
+                "required": false,
+                "compositeKey": [
+                  "compositePrimaryKey",
+                  "compositeUniqueKey"
+                ],
+                "compositePrimaryKey": false,
+                "compositeUniqueKey": false,
+                "error": {},
+                "type": "string",
+                "childType": "varchar",
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+                "arrayItem": true
+              }
+            ]
+          },
+          {
+            "GUID": "3005f0a4-d61e-5207-b0b0-5cb0324a7a07",
+            "name": "employment_contract",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "bfcab12a-650b-597a-b0d3-d8d9862660c6",
+            "name": "compensation_package",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "3545a6b6-cfad-5466-945a-621d1423fc1d",
+            "name": "manager_role",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The EmployeeRole of this employee's manager.",
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "f6be7600-c4b4-57e8-8d63-1831d88ce341",
+            "name": "work_email",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[\\w.\\-+]+@[\\w.\\-]+\\.\\w+$"
+          },
+          {
+            "GUID": "9f3d9c62-39de-584e-8fe0-4837c0a21275",
+            "name": "work_phone",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "fc1addc5-bd06-549f-a240-645df06aeac8",
+            "name": "job_title",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "type": "string",
+            "childType": "varchar"
+          }
+        ],
+        "definitions": {
+          "type": "definitions",
+          "properties": [],
+          "GUID": "ed368dcb-794d-5847-b97a-263dce051e49"
+        },
+        "isActivated": true,
+        "additionalProperties": false,
+        "bucketId": "a986497a-01f2-5497-94d8-96d48334a239",
+        "description": "A Person's engagement as an employee.",
+        "hackoladeMeta": {
+          "validationErrors": {}
+        },
+        "layer": "Domain",
+        "foundationKind": "Role",
+        "entityType": "Core",
+        "steward": "Head of HR Operations",
+        "edmComposes": [
+          "Entity",
+          "Identifiable",
+          "Lifecycleable",
+          "Temporal",
+          "Classifiable"
+        ],
+        "sourceTaxonomyRef": "HR / Core HR & Employee Records / Employee Role",
+        "definitionEntityType": "collection",
+        "fileType": "hackoladeSchema",
+        "definitionRefs": [
+          [
+            "5c2b15ae-4aaa-5667-9ceb-1942f3de880f"
+          ]
+        ],
+        "kind": "relativePath",
+        "link": "../CoreHR/CoreHR.hck.json",
+        "fieldRelativePath": "#/CoreHR/EmployeeRole"
+      }
+    ],
+    "GUID": "0ad1958f-8fe0-58c2-8994-d45f822e9bb9"
+  },
+  "externalDefinitions": {
+    "type": "externalDefinitions",
+    "properties": [
+      {
+        "GUID": "6800298d-7dad-59c7-bd04-58d44d386b17",
+        "collectionName": "NaturalIdentifier",
+        "type": "document",
+        "properties": [
+          {
+            "GUID": "2da6a305-c5e3-5e8a-84d0-f5e1edd5ed1f",
+            "name": "value",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The identifier value itself.",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "30e313a2-3386-5969-8dbb-ea25a2e9534b",
+            "name": "scheme",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The naming/numbering scheme. Examples: \"employee_number\", \"tax_id\", \"iso_country_code\", \"ein\", \"ssn\".",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "f88c3960-c09e-5f9d-8b51-9accb254e82a",
+            "name": "issuer",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The authority that issued this identifier. Examples: \"Acme HR\", \"IRS\", \"ISO\", \"National Social Security Administration\".",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "992ad265-8c01-5a98-a96e-a1c1d26b2ebf",
+            "name": "issued_at",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "When the identifier was issued (if known).",
+            "type": "string",
+            "childType": "date"
+          },
+          {
+            "GUID": "4018d623-50f7-5f38-8944-6b895dcfa75e",
+            "name": "valid_from",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "When this identifier becomes effective.",
+            "type": "string",
+            "childType": "date"
+          },
+          {
+            "GUID": "b669691f-664f-5281-a285-df15832a2180",
+            "name": "valid_to",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "When this identifier ceases to be effective (for reissued keys).",
+            "type": "string",
+            "childType": "date"
+          }
+        ],
+        "isActivated": true,
+        "additionalProperties": false,
+        "description": "A natural/business identifier value paired with the scheme that issued it and the issuer. Example: value=\"E10847\", scheme=\"Acme employee number\", issuer=\"Acme Corp HR\".",
+        "hackoladeMeta": {
+          "validationErrors": {}
+        },
+        "childType": "object",
+        "name": "NaturalIdentifier",
+        "compositeKey": [
+          "compositePrimaryKey",
+          "compositeUniqueKey"
+        ],
+        "compositePrimaryKey": false,
+        "compositeUniqueKey": false,
+        "link": "../../../01_foundation/common/CommonValueTypes.hck.json",
+        "fieldRelativePath": "#/NaturalIdentifier",
+        "kind": "relativePath",
+        "fileType": "hackoladeSchema",
+        "definitionRefs": [
+          [
+            "f376112e-78bc-5cc9-9a2d-618412d50c61",
+            "c52ff668-b620-525b-98a0-6daa90919fa4",
+            "f8371d3e-c53e-5b8d-87ef-7cb6d8950ea7"
+          ]
+        ]
+      },
+      {
+        "GUID": "0a35c238-d4a4-5d3f-a3a3-cf9d5ae418d5",
+        "collectionName": "StateTransition",
+        "type": "document",
+        "properties": [
+          {
+            "GUID": "ac9781ac-6f38-548f-b96d-95dd0e03d593",
+            "name": "from_state",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The prior lifecycle state (as enum string value).",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "eb5f1171-09bc-52cb-b7e9-16ad2b6095b3",
+            "name": "to_state",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The new lifecycle state (as enum string value).",
+            "type": "string",
+            "childType": "varchar"
+          },
+          {
+            "GUID": "59caf463-faef-5eb1-9966-6c81aaa74b39",
+            "name": "transition_timestamp",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": true,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "When the transition occurred.",
+            "type": "string",
+            "childType": "timestamp_tz"
+          },
+          {
+            "GUID": "ded4058b-af94-58fa-b6c3-927734679d55",
+            "name": "transitioned_by_entity_type",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Entity type of transitioned by: one of Person, Role, Team. Polymorphic reference: no relationship (docs/patterns/polymorphic_references.md).",
+            "type": "string",
+            "childType": "enum",
+            "enum": [
+              "Person",
+              "Role",
+              "Team"
+            ]
+          },
+          {
+            "GUID": "209072dd-49ca-5df5-a84b-103011bcac3d",
+            "name": "transitioned_by_entity_id",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "The actor responsible for the transition. Typically references a Person (via their entity_id), but may be a system/service account in automated transitions.",
+            "type": "string",
+            "childType": "varchar",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          },
+          {
+            "GUID": "13fb9ccc-8141-5896-8ae7-7e1822e08c71",
+            "name": "reason",
+            "isActivated": true,
+            "primaryKey": false,
+            "required": false,
+            "compositeKey": [
+              "compositePrimaryKey",
+              "compositeUniqueKey"
+            ],
+            "compositePrimaryKey": false,
+            "compositeUniqueKey": false,
+            "error": {},
+            "description": "Free-text reason or note explaining the transition.",
+            "type": "string",
+            "childType": "varchar"
+          }
+        ],
+        "isActivated": true,
+        "additionalProperties": false,
+        "description": "A single transition from one lifecycle state to another. Captured as immutable history on any Lifecycleable entity. Enables audit trails and point-in-time reconstruction of lifecycle history.",
+        "hackoladeMeta": {
+          "validationErrors": {}
+        },
+        "childType": "object",
+        "name": "StateTransition",
+        "compositeKey": [
+          "compositePrimaryKey",
+          "compositeUniqueKey"
+        ],
+        "compositePrimaryKey": false,
+        "compositeUniqueKey": false,
+        "link": "../../../01_foundation/common/CommonValueTypes.hck.json",
+        "fieldRelativePath": "#/StateTransition",
+        "kind": "relativePath",
+        "fileType": "hackoladeSchema",
+        "definitionRefs": [
+          [
+            "f376112e-78bc-5cc9-9a2d-618412d50c61",
+            "7fe8f6bd-97f0-57d8-bf9b-1007d47e706b",
+            "3f4a704a-1bf8-5d5d-97f6-3c8de3a70975"
+          ]
+        ]
+      }
+    ],
+    "GUID": "42250a28-0a68-5c7f-b773-8c96333e2e89"
+  },
+  "sources": [],
+  "decorativeSymbols": [],
+  "businessGlossaries": [],
+  "businessGlossaryTerms": [],
+  "dbVendor": "Polyglot",
+  "appTarget": "Polyglot",
+  "creationTS": "2026-10-12T12:00:00.000Z",
+  "GUID": "b13f0824-0846-57f5-83f7-821a97e6a8dc",
+  "isLineageEnabled": false,
+  "polyglotModelPaths": [
+    {
+      "GUID": "323fdb67-3ebf-52fa-955c-c3412617ba2a",
+      "polyglotModelName": "CoreHR.hck",
+      "polyglotModelPath": "../CoreHR/CoreHR.hck.json",
+      "normalization": false,
+      "applyTargetNamingConventions": true
+    }
+  ],
+  "lastModifTS": "2026-10-12T12:00:00.000Z",
+  "persistenceSchemaVersion": "8",
+  "isCreatedByPlugin": true,
+  "pluginInformation": {
+    "pluginName": "Polyglot",
+    "pluginVersion": "0.0.1",
+    "pluginEngineVersion": "1.0.0"
+  },
+  "applicationInformation": {
+    "version": "8.11.6"
+  },
+  "hackoladeMeta": {
+    "validationErrors": {}
+  },
+  "description": "HR subdomain Performance Management. Origin of PerformanceReview.",
+  "settings": {
+    "centralPane": {
+      "dbLevel": {
+        "erd": [
+          {
+            "GUID": "f376112e-78bc-5cc9-9a2d-618412d50c61",
+            "x": 1000,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "5c2b15ae-4aaa-5667-9ceb-1942f3de880f",
+            "x": 1420,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          }
+        ],
+        "erdDefinitions": {
+          "erd": [],
+          "rootPath": [],
+          "entities": [],
+          "decorativeSymbols": []
+        },
+        "buckets": [],
+        "collapsedNodes": [],
+        "activeRelationship": "",
+        "activeRelationshipFields": {
+          "childField": [],
+          "parentField": []
+        },
+        "selectedCollections": [],
+        "displayColorPicker": false,
+        "graphView": {
+          "erd": [],
+          "buckets": [],
+          "decorativeSymbols": [],
+          "forceLayout": true,
+          "defaultLinkLength": 300
+        },
+        "diagramViews": [],
+        "decorativeSymbols": [],
+        "nestedCollectionsLayout": "horizontal",
+        "options": [],
+        "relationshipUpdateDisabled": false
+      },
+      "collectionLevel": {},
+      "changed": false
+    },
+    "dtDiagram": {
+      "collapsedNodes": [],
+      "shouldDistributeCollections": false
+    }
+  },
+  "edmBuiltBy": "migration/build.py",
+  "edmLayer": "Domain",
+  "edmDomain": "HR",
+  "edmSubdomain": "Performance Management"
+}

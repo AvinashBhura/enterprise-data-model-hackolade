@@ -1,0 +1,808 @@
+# What the one-time builder writes (D5, D12).
+#
+# Entities marked `linkml:` are migrated from the LinkML schemas at tag
+# linkml-final-v0.5.0. Entities with `attributes:` are new (Talent Acquisition
+# and the Common taxonomy model), written from the approved HR taxonomy and D11.
+# Specs: 0002 (Common, Foundation), 0003 (HR), 0004 (process), 0005 (application).
+
+linkml_tag: linkml-final-v0.5.0
+
+# ------------------------------------------------------------------ range mapping (spec 0002)
+mapping:
+  # ISO code lists become format rules (D3, spec 0002 requirement 13)
+  iso_code_lists:
+    CurrencyCodeEnum: {pattern: '^[A-Z]{3}$', standard: ISO 4217 three-letter currency code}
+    CountryCodeEnum: {pattern: '^[A-Z]{2}$', standard: ISO 3166-1 alpha-2 country code}
+    LanguageCodeEnum: {pattern: '^[a-z]{2}$', standard: ISO 639-1 two-letter language code}
+    UnitOfMeasureCodeEnum: {pattern: '^[A-Z0-9]{2,3}$', standard: UN/CEFACT Recommendation 20 unit code}
+  # Shared composite value types, reused by external reference (D2, D12)
+  value_types: [AmountType, QuantityType, DocumentType, StateTransition, NaturalIdentifier]
+  # Written inline as an array of objects on the attribute that uses it (D12)
+  inline_classes: [AgreementParty]
+  # Ranges that become a <name>_entity_type + <name>_entity_id pair (spec 0002 requirement 14)
+  polymorphic_ranges:
+    Entity: [Person, Organization, LegalEntity, OrganizationalUnit, Team, Role]
+    Organization: [LegalEntity, OrganizationalUnit]   # Organization is abstract: never a table
+  # Singular names for the items of multivalued polymorphic attributes
+  singular:
+    participants: participant
+    sponsoring_organizations: sponsoring_organization
+  # Extra attribute written beside a multivalued pair
+  pair_extras:
+    participants:
+      - {name: participation_role, kind: string, description: 'Capacity in which this party took part (e.g. "organizer", "attendee", "approver").'}
+  # Allowed entity types per Entity-ranged attribute, where narrower than the default
+  polymorphic_allowed:
+    Role.engaging_party: [Person, Organization, LegalEntity, OrganizationalUnit, Team]
+    AgreementParty.party: [Person, Organization, LegalEntity, OrganizationalUnit, Team]
+    StateTransition.transitioned_by: [Person, Role, Team]
+  # Attributes whose range names a concrete subtype instead of the abstract one
+  range_overrides:
+    EmployeeRole.employing_legal_entity: LegalEntity
+    Position.organizational_unit: OrganizationalUnit
+    StepCompletion.process_instance_id: ProcessInstance
+    ProcessEvent.process_instance_id: ProcessInstance
+  # Inherited references to the kind itself that point to the specialising entity
+  # (a JobRequisition replaces a JobRequisition). Other inherited references keep
+  # their Foundation target (a RecruitingAgency's ultimate_parent is a LegalEntity).
+  self_references: [Document.replaces_document, Period.parent_period, Team.parent_team]
+  # Not migrated
+  dropped_ranges: [Classification]          # Classifiable is a marker (spec 0002, resolved question 1)
+  dropped_attributes:
+    roles: inverse of Role.held_by_person / held_by_organization (RoleHolder, spec 0002 requirement 10)
+    ProcessDefinition.steps: inverse of ProcessStep.process_definition (spec 0004 requirement 6)
+    ProcessDefinition.transitions: inverse of ProcessTransition.from_step / to_step (spec 0004 requirement 6)
+    ProcessInstance.step_completions: inverse of StepCompletion.process_instance_id (spec 0004 requirement 6)
+    ProcessInstance.events: inverse of ProcessEvent.process_instance_id (spec 0004 requirement 6)
+  # Format rules added where a LinkML type existed but was not applied
+  patterns:
+    Address.timezone: {pattern: '^[A-Za-z_]+(/[A-Za-z_0-9+\-]+)+$', standard: IANA time zone identifier}
+  # Descriptions that described schema-language mechanics, reworded (meaning unchanged)
+  description_overrides:
+    Lifecycleable.lifecycle_state: >-
+      Current lifecycle state of the entity. Each entity has its own list of
+      states, held on this attribute with the meaning of each value (D3).
+    Role.engaging_party: >-
+      The party on the other side of the engagement — typically the Organization
+      (or Team) that the holder is engaged with.
+    Activity.participants: >-
+      Participants in this activity — Persons, Organizations, or Teams. Each is
+      named by its entity type and entity_id, so any kind of party can take part.
+    ProcessInstance.subject_entity_id: >-
+      entity_id of the Domain-layer entity this process operates on (e.g., an
+      EmployeeRole's entity_id for onboarding). Paired with subject_entity_type,
+      so one process model serves subjects of any type.
+    ProcessInstance.subject_entity_type: >-
+      The entity name of the subject (e.g., "EmployeeRole", "JobApplication").
+      Combined with subject_entity_id this fully resolves the subject reference.
+  entity_description_overrides:
+    Role: >-
+      A time-bound engagement. Role is concrete (not abstract) because some
+      generic engagements may be captured directly as Role instances. However, in
+      practice most Roles are Domain-layer specializations. Exactly one of
+      held_by_person or held_by_organization must be populated (enforced by the
+      applications that write the data). Engagements that could be held by
+      either (like VendorRole) carry both, with one populated.
+    SyncMetadata: >-
+      A reusable value type capturing sync metadata. Application models
+      typically embed this as a single attribute.
+  # Personal-data classification (spec 0005 requirement 11)
+  classification:
+    Person.given_name: PII
+    Person.family_name: PII
+    Person.middle_names: PII
+    Person.honorific_prefix: PII
+    Person.honorific_suffix: PII
+    Person.preferred_name: PII
+    Person.date_of_birth: PII
+    Person.date_of_death: PII
+    Person.gender_identity: Sensitive PII
+    Person.pronouns: PII
+    Person.nationality: Sensitive PII
+    Person.primary_language: PII
+    Person.additional_languages: PII
+    Person.email_addresses: PII
+    Person.phone_numbers: PII
+    Address.line_1: PII
+    Address.line_2: PII
+    Address.line_3: PII
+    Address.postal_code: PII
+    Address.latitude: PII
+    Address.longitude: PII
+    Candidate.consent_status: PII
+    JobApplication.resume_reference: PII
+    JobApplication.screening_score: Sensitive PII
+    JobApplication.disposition_reason: PII
+    Interview.feedback_summary: PII
+    Interview.outcome: PII
+    InterviewPanelAssignment.recommendation: PII
+    Assessment.score: Sensitive PII
+    Assessment.percentile: Sensitive PII
+    Assessment.pass_flag: Sensitive PII
+    BackgroundCheck.result: Sensitive PII
+    BackgroundCheck.adjudication: Sensitive PII
+    SelectionDecision.outcome: PII
+    SelectionDecision.rationale: PII
+    Offer.sign_on_bonus: PII
+    Offer.relocation_amount: PII
+    Offer.equity_grant: PII
+    Offer.bonus_target: PII
+    EmployeeReferral.bonus_eligible: Internal
+    EmployeeConsentRecord.consent_type: PII
+    EmployeeConsentRecord.granted_at: PII
+    EmployeeConsentRecord.withdrawn_at: PII
+
+# ------------------------------------------------------------------ models, in build order
+models:
+
+  # ================================================================ Common
+  - name: CommonValueTypes
+    file: src/01_foundation/common/CommonValueTypes.hck.json
+    layer: Common
+    steward: EDM architecture
+    description: >-
+      Shared composite value types (D2). Each is an entity marked as a value type
+      (edmValueType): never a table on its own, reused by other models through an
+      entity-level external reference.
+    entities:
+      - {linkml: AmountType, entityType: Supporting, valueType: true}
+      - {linkml: QuantityType, entityType: Supporting, valueType: true}
+      - {linkml: DocumentType, entityType: Supporting, valueType: true}
+      - {linkml: StateTransition, entityType: Supporting, valueType: true}
+      - {linkml: NaturalIdentifier, entityType: Supporting, valueType: true}
+
+  - name: CommonTaxonomy
+    file: src/01_foundation/common/CommonTaxonomy.hck.json
+    layer: Common
+    steward: EDM architecture
+    description: >-
+      The generic, versioned taxonomy model (D11). Every enterprise taxonomy is data
+      in these five entities. It combines an adjacency list (the source of truth), a
+      closure table, materialised paths and SCD Type 2 bounded by named versions.
+    entities:
+      - name: Taxonomy
+        entityType: Core
+        description: >-
+          One enterprise taxonomy, such as Position Type, Geography, Industry
+          Classification or Chart of Accounts. Its nodes and versions are data in
+          TaxonomyNode and TaxonomyVersion.
+        attributes:
+          - {name: taxonomy_id, kind: uuid, required: true, pk: true, description: Surrogate key of the taxonomy.}
+          - {name: taxonomy_code, kind: string, required: true, unique: true, description: 'Stable code of the taxonomy, for example POSITION_TYPE. Unique.'}
+          - {name: name, kind: string, required: true, description: Display name of the taxonomy.}
+          - {name: description, kind: string, description: What the taxonomy classifies and how it is used.}
+          - {name: source_standard, kind: string, description: 'External standard the taxonomy follows, if any (for example SOC, NAICS, ISO 3166).'}
+          - {name: owner_role, kind: string, description: Role accountable for the taxonomy's content.}
+          - {name: status, kind: string, description: 'Whether the taxonomy is in use (for example ACTIVE, RETIRED).'}
+      - name: TaxonomyVersion
+        entityType: Supporting
+        description: >-
+          A named release of a taxonomy: DRAFT, PUBLISHED or RETIRED. Versions are the
+          clock all taxonomy history is measured against. A taxonomy has at most one
+          DRAFT version. Published versions never change; a correction is a new
+          version.
+        unique: [[taxonomy_id, version_seq]]
+        attributes:
+          - {name: taxonomy_version_id, kind: uuid, required: true, pk: true, description: Surrogate key of the version.}
+          - {name: taxonomy_id, kind: ref, target: Taxonomy, required: true, description: The taxonomy this version belongs to.}
+          - {name: version_seq, kind: integer, required: true, description: 'Sequence number of the version within its taxonomy (1, 2, 3...). Unique with taxonomy_id.'}
+          - {name: version_label, kind: string, description: 'Display label of the version, for example 2026.1.'}
+          - name: status
+            kind: enum
+            required: true
+            description: Publication state of the version.
+            values:
+              DRAFT: Being edited; at most one per taxonomy.
+              PUBLISHED: Released; never changes.
+              RETIRED: No longer the current version.
+          - {name: effective_from, kind: date, description: Business date from which the version applies.}
+          - {name: effective_to, kind: date, description: Business date until which the version applies (open if empty).}
+          - {name: published_at, kind: datetime, description: When the version was published.}
+          - {name: published_by, kind: string, description: Who published the version.}
+          - {name: based_on_version_id, kind: uuid, description: The version this one was started from.}
+          - {name: change_summary, kind: string, description: What changed in this version.}
+      - name: TaxonomyNode
+        entityType: Core
+        description: >-
+          One version row of a taxonomy node (adjacency list, materialised path and
+          SCD Type 2). node_key is the node's durable identity across all versions.
+          Only parent_node_key is edited; depth, key_path and label_path are derived
+          from it in the same transaction, together with the TaxonomyClosure rows.
+          Nodes are retired, never deleted. A move into the node's own subtree is
+          refused.
+        attributes:
+          - {name: node_version_id, kind: uuid, required: true, pk: true, description: Surrogate key of this version row of the node.}
+          - {name: node_key, kind: uuid, required: true, description: Durable identity of the node across all versions.}
+          - {name: taxonomy_id, kind: ref, target: Taxonomy, required: true, description: The taxonomy this node belongs to.}
+          - {name: node_code, kind: string, required: true, description: Stable code of the node within its taxonomy; used in key_path.}
+          - {name: node_label, kind: string, required: true, description: Display label of the node; used in label_path.}
+          - {name: description, kind: string, description: Meaning of the node.}
+          - {name: parent_node_key, kind: ref, target: TaxonomyNode, target_attribute: node_key, description: node_key of the parent node; empty for a root. The only hierarchy attribute that is edited.}
+          - {name: depth, kind: integer, required: true, description: Distance from the root (root = 0). Derived from parent_node_key.}
+          - {name: sort_order, kind: integer, description: Display order among siblings.}
+          - {name: is_leaf, kind: boolean, description: True when the node has no children in this version.}
+          - {name: key_path, kind: string, required: true, description: 'Materialised path of node codes from the root, for example TECH.ENG.SWE. Derived.'}
+          - {name: label_path, kind: string, required: true, description: 'Materialised path of labels from the root, for example Technical > Engineering > Software. Derived.'}
+          - {name: from_version_seq, kind: integer, required: true, description: First taxonomy version (version_seq) in which this row applies.}
+          - {name: to_version_seq, kind: integer, description: Taxonomy version from which this row no longer applies (open if empty).}
+          - {name: valid_from, kind: datetime, description: When this row became valid (set on publication).}
+          - {name: valid_to, kind: datetime, description: When this row stopped being valid.}
+          - {name: is_current, kind: boolean, required: true, description: True for the row valid in the current published version.}
+          - name: change_type
+            kind: enum
+            required: true
+            description: Why this row was created.
+            values:
+              CREATE: New node.
+              RENAME: Label changed; descendants get PATH_CASCADE rows.
+              MOVE: Parent changed; closure rows of the subtree are closed and reopened.
+              UPDATE: Other attribute changed.
+              RETIRE: Node closed; children are moved or retired first.
+              PATH_CASCADE: Path changed because an ancestor was moved or renamed.
+      - name: TaxonomyClosure
+        entityType: Supporting
+        description: >-
+          Every ancestor-descendant pair of nodes with its depth (closure table, SCD
+          Type 2). Derived from TaxonomyNode.parent_node_key in the same transaction
+          as each change, never edited directly. Rows join on node_key, not on the
+          node version row. A scheduled check rebuilds the closure from the
+          adjacency list and compares; any difference is a defect.
+        composite_pk: [ancestor_node_key, descendant_node_key, from_version_seq]
+        attributes:
+          - {name: ancestor_node_key, kind: ref, target: TaxonomyNode, target_attribute: node_key, required: true, description: node_key of the ancestor.}
+          - {name: descendant_node_key, kind: ref, target: TaxonomyNode, target_attribute: node_key, required: true, description: node_key of the descendant.}
+          - {name: from_version_seq, kind: integer, required: true, description: First taxonomy version in which this pair applies.}
+          - {name: taxonomy_id, kind: uuid, required: true, description: The taxonomy both nodes belong to.}
+          - {name: depth, kind: integer, required: true, description: Number of levels between ancestor and descendant (0 = the node itself).}
+          - {name: to_version_seq, kind: integer, description: Taxonomy version from which this pair no longer applies (open if empty).}
+          - {name: valid_from, kind: datetime, description: When this pair became valid.}
+          - {name: valid_to, kind: datetime, description: When this pair stopped being valid.}
+          - {name: is_current, kind: boolean, required: true, description: True for pairs valid in the current published version.}
+      - name: TransactionHierarchy
+        entityType: Supporting
+        description: >-
+          Immutable history of which taxonomy node a business record was classified
+          under, with the node version and both paths as they stood then.
+          Append-only: no update or delete; a reclassification is a new row that
+          supersedes the previous one. The classified record is named by
+          transaction_entity and transaction_id, with no relationship; allowed entity
+          names are listed in config/edm-rules.yaml. A "transaction" here is any
+          classified business record, not a financial transaction.
+        attributes:
+          - {name: transaction_hierarchy_id, kind: uuid, required: true, pk: true, description: Surrogate key of the classification event.}
+          - {name: taxonomy_id, kind: ref, target: Taxonomy, required: true, description: The taxonomy used.}
+          - {name: transaction_entity, kind: string, required: true, description: 'Name of the EDM entity of the classified record, for example Position.'}
+          - {name: transaction_id, kind: uuid, required: true, description: entity_id of the classified record.}
+          - name: classification_role
+            kind: enum
+            required: true
+            description: Purpose of this classification.
+            values:
+              PRIMARY: The record's main classification in this taxonomy.
+              SECONDARY: An additional classification (for a record that belongs in two branches).
+              REPORTING: A classification used only for reporting.
+          - {name: node_key, kind: uuid, required: true, description: Durable identity of the node the record was classified under.}
+          - {name: node_version_id, kind: ref, target: TaxonomyNode, required: true, description: The node version row in force at classification.}
+          - {name: taxonomy_version_id, kind: ref, target: TaxonomyVersion, required: true, description: The taxonomy version in force at classification.}
+          - {name: key_path_snapshot, kind: string, required: true, description: key_path of the node at classification (as-was).}
+          - {name: label_path_snapshot, kind: string, required: true, description: label_path of the node at classification (as-was).}
+          - {name: effective_from, kind: date, required: true, description: Business date from which the classification applies.}
+          - {name: recorded_at, kind: datetime, required: true, description: When the classification was recorded.}
+          - {name: recorded_by, kind: string, description: Who or what recorded the classification.}
+          - {name: source_system, kind: string, description: System that supplied the classification.}
+          - {name: supersedes_id, kind: uuid, description: transaction_hierarchy_id of the row this one replaces.}
+          - {name: reason_code, kind: string, description: Why the record was classified or reclassified.}
+
+  # ================================================================ Foundation
+  - name: Foundation
+    file: src/01_foundation/Foundation.hck.json
+    layer: Foundation
+    steward: EDM architecture
+    description: >-
+      The permanent enterprise concepts. Entity is the root; Person, Organization
+      (LegalEntity, OrganizationalUnit), Team, Role, Activity, Agreement, Asset,
+      Address, Document and Period specialise it. Every Domain, Process and
+      Application entity specialises exactly one of these kinds and carries its
+      attributes (D12). Entity and Organization are never tables (edmAbstract).
+    entities:
+      - {linkml: Entity, entityType: Core, abstract: true}
+      - {linkml: Person, entityType: Core}
+      - {linkml: Organization, entityType: Core, abstract: true}
+      - {linkml: LegalEntity, entityType: Core}
+      - {linkml: OrganizationalUnit, entityType: Core}
+      - {linkml: Team, entityType: Core}
+      - {linkml: Role, entityType: Core,
+         enum_additions: {role_type: {CANDIDATE: A Person engaged as a job seeker (Talent Acquisition).,
+                                      INTERVIEWER: A Person assigned to interview candidates (Talent Acquisition).}}}
+      - {linkml: Activity, entityType: Core}
+      - {linkml: Agreement, entityType: Core}
+      - {linkml: Asset, entityType: Core}
+      - {linkml: Address, entityType: Core}
+      - {linkml: Document, entityType: Core}
+      - {linkml: Period, entityType: Core}
+
+  # ================================================================ Domain: HR
+  - name: WorkforcePlanning
+    file: src/02_domain/HR/WorkforcePlanning/WorkforcePlanning.hck.json
+    layer: Domain
+    domain: HR
+    subdomain: Workforce Planning & Organization Design
+    steward: VP People Strategy / Head of Workforce Planning
+    description: >-
+      HR subdomain Workforce Planning & Organization Design (D7). Origin of
+      Position and PositionHierarchy, moved from PeopleServices.
+    entities:
+      - {linkml: Position, kind: Role, entityType: Core, taxonomy: HR / Workforce Planning & Organization Design / Position}
+      - {linkml: PositionHierarchy, kind: Document, entityType: Supporting}
+
+  - name: Compensation
+    file: src/02_domain/HR/Compensation/Compensation.hck.json
+    layer: Domain
+    domain: HR
+    subdomain: Compensation & Rewards
+    steward: VP Total Rewards
+    description: HR subdomain Compensation. Origin of CompensationPackage.
+    entities:
+      - {linkml: CompensationPackage, kind: Agreement, entityType: Core, taxonomy: HR / Compensation & Rewards / Compensation Package}
+
+  - name: CoreHR
+    file: src/02_domain/HR/CoreHR/CoreHR.hck.json
+    layer: Domain
+    domain: HR
+    subdomain: Core HR & Employee Records
+    steward: Head of HR Operations
+    description: >-
+      HR subdomain Core HR (D7: formerly PeopleServices). Origin of the employment
+      roles, the employment contract and onboarding checklists.
+    entities:
+      - {linkml: EmployeeRole, kind: Role, entityType: Core, taxonomy: HR / Core HR & Employee Records / Employee Role}
+      - {linkml: ContractorRole, kind: Role, entityType: Core}
+      - {linkml: AlumniRole, kind: Role, entityType: Supporting}
+      - {linkml: ManagerRole, kind: Role, entityType: Supporting}
+      - {linkml: EmploymentContract, kind: Agreement, entityType: Core, taxonomy: HR / Core HR & Employee Records / Employment Contract}
+      - {linkml: OnboardingChecklist, kind: Document, entityType: Supporting}
+      - {linkml: ChecklistItem, kind: Document, entityType: Supporting}
+
+  - name: Performance
+    file: src/02_domain/HR/Performance/Performance.hck.json
+    layer: Domain
+    domain: HR
+    subdomain: Performance Management
+    steward: Head of Performance & Talent
+    description: HR subdomain Performance Management. Origin of PerformanceReview.
+    entities:
+      - {linkml: PerformanceReview, kind: Activity, entityType: Core}
+
+  - name: HRCompliance
+    file: src/02_domain/HR/HRCompliance/HRCompliance.hck.json
+    layer: Domain
+    domain: HR
+    subdomain: HR Compliance & Employee Relations
+    steward: Head of HR Compliance
+    description: >-
+      HR subdomain HR Compliance. Origin of EmployeeConsentRecord, the consent a
+      person gives for processing of their data; Talent Acquisition uses it for
+      background-check consent.
+    entities:
+      - name: EmployeeConsentRecord
+        kind: Document
+        entityType: Supporting
+        taxonomy: HR / HR Compliance & Employee Relations / Employee Consent Record
+        description: >-
+          GDPR/CCPA consent a person has given (or withdrawn) for a stated purpose,
+          such as data processing, monitoring or a background check. Withdrawal must
+          be honoured and drives data lifecycle actions. Applies to employees and to
+          candidates.
+        attributes:
+          - {name: consent_id, kind: string, required: true, unique: true, description: Natural key of the consent record.}
+          - {name: person, kind: ref, target: Person, required: true, description: The person who gave the consent.}
+          - name: consent_type
+            kind: enum
+            required: true
+            description: What the consent covers.
+            values:
+              DATA_PROCESSING: Processing of personal data for employment purposes.
+              MONITORING: Workplace monitoring.
+              PHOTO: Use of the person's image.
+              BACKGROUND_CHECK: A pre-employment or periodic background check.
+          - {name: granted_at, kind: datetime, required: true, description: When the consent was given.}
+          - {name: withdrawn_at, kind: datetime, description: When the consent was withdrawn; empty while it stands.}
+          - {name: purpose_scope, kind: string, description: The purpose and scope the consent was given for.}
+          - {name: lawful_basis, kind: string, description: 'Lawful basis for processing (for example consent, contract, legal obligation).'}
+          - {name: retention_period, kind: ref, target: Period, description: How long data covered by this consent is kept.}
+
+  - name: TalentAcquisition
+    file: src/02_domain/HR/TalentAcquisition/TalentAcquisition.hck.json
+    layer: Domain
+    domain: HR
+    subdomain: Talent Acquisition
+    steward: VP Talent Acquisition / Head of Recruiting
+    description: >-
+      HR subdomain Talent Acquisition: attracting, assessing and hiring talent, from
+      requisition through offer and the selection decision. The 15 data domains of
+      the HR taxonomy plus Selection Decision. Entities owned by other HR subdomains
+      (Position, EmployeeRole, CompensationPackage, EmploymentContract,
+      EmployeeConsentRecord) are derived from their origin models, read-only.
+    entities:
+      - name: JobRequisition
+        kind: Document
+        entityType: Core
+        taxonomy: HR / Talent Acquisition / Job Requisition
+        description: >-
+          The approved request to fill one or more positions. References the
+          Position owned by Workforce Planning; further positions covered by the
+          same requisition are linked through RequisitionPositionLink.
+        attributes:
+          - {name: requisition_id, kind: string, required: true, unique: true, description: Natural key of the requisition.}
+          - {name: position, kind: ref, target: Position, required: true, description: The main position this requisition fills.}
+          - {name: hiring_manager_role, kind: ref, target: EmployeeRole, required: true, description: The employee who will manage the hire.}
+          - {name: recruiter_role, kind: ref, target: EmployeeRole, description: The recruiter responsible for the requisition.}
+          - {name: opened_date, kind: date, description: Date the requisition was opened.}
+          - {name: target_start_date, kind: date, description: Date the new hire should start.}
+          - {name: approval_chain, kind: string, description: Approvers of the requisition, in order. The approval workflow itself is a process instance (Process layer).}
+          - {name: budget_approved, kind: boolean, description: True when the hiring budget is approved.}
+        lifecycle:
+          DRAFT: Being written.
+          APPROVED: Approved, not yet open to candidates.
+          OPEN: Open to candidates.
+          ON_HOLD: Paused.
+          FILLED: All positions filled.
+          CANCELLED: Withdrawn without hire.
+      - name: Candidate
+        kind: Role
+        entityType: Core
+        taxonomy: HR / Talent Acquisition / Candidate
+        description: >-
+          A person engaged with the enterprise as a job seeker. Candidate is a Role
+          held by a Person (held_by_person). On hire the person takes an
+          EmployeeRole; the Candidate role ends.
+        narrow: {role_type: [CANDIDATE]}
+        require: [held_by_person]
+        attributes:
+          - {name: candidate_id, kind: string, required: true, unique: true, description: Natural key of the candidate.}
+          - {name: source_channel, kind: ref, target: CandidateSourceChannel, description: Channel through which the candidate first came. Full multi-touch history is in CandidateSourceAttribution.}
+          - {name: first_contact_date, kind: date, description: Date of first contact with the candidate.}
+          - {name: talent_pipelines, kind: ref, target: TalentPipeline, many: true, description: Talent pipelines the candidate belongs to (TalentPipeline entity_id values).}
+          - {name: consent_status, kind: string, description: Summary of the candidate's data-processing consent. The consent itself is an EmployeeConsentRecord.}
+        lifecycle:
+          NEW: Newly engaged.
+          SCREENING: Being screened.
+          INTERVIEWING: In interviews.
+          OFFER: Holding or negotiating an offer.
+          HIRED: Hired; an EmployeeRole has started.
+          REJECTED: Not selected.
+          WITHDRAWN: Withdrew from consideration.
+      - name: JobApplication
+        kind: Document
+        entityType: Core
+        taxonomy: HR / Talent Acquisition / Job Application
+        description: >-
+          A candidate's application to a requisition. Its progress through the
+          hiring stages is a process instance whose subject is this application
+          (Process layer); stage here is a read-only summary of it.
+        attributes:
+          - {name: application_id, kind: string, required: true, unique: true, description: Natural key of the application.}
+          - {name: candidate, kind: ref, target: Candidate, required: true, description: The candidate who applied.}
+          - {name: job_requisition, kind: ref, target: JobRequisition, required: true, description: The requisition applied to.}
+          - {name: applied_date, kind: date, required: true, description: Date the application was received.}
+          - {name: application_source, kind: string, description: Where the application came from (careers site, job board, referral...).}
+          - {name: resume_reference, kind: uri, description: Link to the stored resume.}
+          - {name: screening_score, kind: decimal, description: Score from initial screening.}
+          - {name: stage, kind: string, description: Current hiring stage, copied from the application's process instance for display. Not edited here.}
+          - {name: disposition_reason, kind: string, description: Why the application was closed, if it was.}
+      - name: JobPosting
+        kind: Document
+        entityType: Core
+        taxonomy: HR / Talent Acquisition / Job Posting
+        description: The externally published advertisement of a requisition.
+        attributes:
+          - {name: posting_id, kind: string, required: true, unique: true, description: Natural key of the posting.}
+          - {name: job_requisition, kind: ref, target: JobRequisition, required: true, description: The requisition advertised.}
+          - {name: posting_channel, kind: string, description: Where it is published (careers site, job board name...).}
+          - {name: posted_date, kind: date, description: Date first published.}
+          - {name: expiry_date, kind: date, description: Date the posting expires.}
+          - {name: posting_content, kind: string, description: The advertisement text, or a reference to it.}
+          - {name: views_count, kind: integer, description: Number of views.}
+          - {name: applications_count, kind: integer, description: Number of applications received through this posting.}
+          - {name: eeo_statement_included, kind: boolean, description: True when the equal-employment-opportunity statement is included.}
+      - linkml: Offer
+        kind: Agreement
+        entityType: Core
+        taxonomy: HR / Talent Acquisition / Offer
+        attributes:
+          - {name: equity_grant, kind: value, target: AmountType, description: Value of the equity grant offered.}
+          - {name: bonus_target, kind: value, target: AmountType, description: Target annual bonus offered.}
+      - name: Interview
+        kind: Activity
+        entityType: Supporting
+        taxonomy: HR / Talent Acquisition / Interview
+        description: An interview of a candidate for an application. Scheduled with scheduled_start and scheduled_end; the result is in outcome.
+        narrow: {activity_type: [MEETING]}
+        attributes:
+          - {name: interview_id, kind: string, required: true, unique: true, description: Natural key of the interview.}
+          - {name: job_application, kind: ref, target: JobApplication, required: true, description: The application this interview is for.}
+          - name: interview_type
+            kind: enum
+            required: true
+            description: Kind of interview.
+            values:
+              SCREEN: Initial screening conversation.
+              TECHNICAL: Technical skills interview.
+              BEHAVIORAL: Behavioural interview.
+              PANEL: Panel interview.
+              FINAL: Final interview.
+          - {name: duration_minutes, kind: integer, description: Planned length in minutes.}
+          - name: interview_format
+            kind: enum
+            description: How the interview is held.
+            values:
+              ONSITE: In person.
+              VIDEO: By video call.
+              PHONE: By phone.
+          - {name: feedback_summary, kind: string, description: Summary of interviewer feedback. Individual feedback is on InterviewPanelAssignment.}
+      - name: Assessment
+        kind: Activity
+        entityType: Supporting
+        taxonomy: HR / Talent Acquisition / Assessment
+        description: A structured evaluation of a candidate for an application, such as a coding test or work sample.
+        narrow: {activity_type: [REVIEW]}
+        attributes:
+          - {name: assessment_id, kind: string, required: true, unique: true, description: Natural key of the assessment.}
+          - {name: job_application, kind: ref, target: JobApplication, required: true, description: The application assessed.}
+          - name: assessment_type
+            kind: enum
+            required: true
+            description: Kind of assessment.
+            values:
+              CODING: Programming exercise.
+              COGNITIVE: Cognitive ability test.
+              PERSONALITY: Personality questionnaire.
+              WORK_SAMPLE: Sample of the actual work.
+          - {name: provider, kind: string, description: Who administered the assessment.}
+          - {name: administered_at, kind: datetime, description: When the assessment was taken.}
+          - {name: score, kind: decimal, description: Raw score.}
+          - {name: percentile, kind: decimal, description: Percentile against the provider's norm group.}
+          - {name: pass_flag, kind: boolean, description: True when the candidate passed.}
+      - name: BackgroundCheck
+        kind: Activity
+        entityType: Supporting
+        taxonomy: HR / Talent Acquisition / Background Check
+        description: >-
+          Pre-employment screening of a candidate. Regulated (for example by FCRA
+          in the US) and requires the candidate's consent, recorded as an
+          EmployeeConsentRecord.
+        narrow: {activity_type: [TASK]}
+        attributes:
+          - {name: check_id, kind: string, required: true, unique: true, description: Natural key of the check.}
+          - {name: candidate, kind: ref, target: Candidate, required: true, description: The candidate checked.}
+          - name: check_type
+            kind: enum
+            required: true
+            description: What is checked.
+            values:
+              CRIMINAL: Criminal record.
+              EMPLOYMENT: Employment history.
+              EDUCATION: Education history.
+              CREDIT: Credit history.
+              REFERENCE: References.
+          - {name: provider_organization, kind: ref, target: LegalEntity, description: The screening company that performs the check.}
+          - {name: consent_record, kind: ref, target: EmployeeConsentRecord, required: true, description: The candidate's consent to the check.}
+          - {name: initiated_at, kind: datetime, description: When the check was requested.}
+          - {name: completed_at, kind: datetime, description: When the result was received.}
+          - name: result
+            kind: enum
+            description: Result of the check.
+            values:
+              CLEAR: Nothing found.
+              FLAGGED: Something found that needs review.
+              ADVERSE: Result that may lead to an adverse decision.
+          - {name: adjudication, kind: string, description: Decision taken on a flagged or adverse result, and why.}
+      - name: CandidateSourceChannel
+        kind: Document
+        entityType: Supporting
+        taxonomy: HR / Talent Acquisition / Candidate Source Channel
+        description: A channel through which candidates arrive; drives sourcing return-on-investment analysis.
+        attributes:
+          - {name: channel_id, kind: string, required: true, unique: true, description: Natural key of the channel.}
+          - {name: channel_name, kind: string, required: true, description: Display name of the channel.}
+          - name: channel_type
+            kind: enum
+            required: true
+            description: Kind of channel.
+            values:
+              JOB_BOARD: Job board.
+              REFERRAL: Employee referral.
+              AGENCY: Recruiting agency.
+              DIRECT: Direct application or sourcing.
+              SOCIAL: Social media.
+              CAMPUS: Campus recruiting.
+          - {name: cost_per_hire, kind: value, target: AmountType, description: Average cost per hire through this channel.}
+          - {name: quality_score, kind: decimal, description: Quality score of hires from this channel.}
+          - {name: active_flag, kind: boolean, description: True while the channel is in use.}
+      - name: RecruitingAgency
+        kind: LegalEntity
+        entityType: Supporting
+        taxonomy: HR / Talent Acquisition / Recruiting Agency
+        description: >-
+          An external recruiting partner: a legal entity engaged to find
+          candidates. Its contract is a Procurement vendor contract.
+        narrow: {organization_type: [PARTNER]}
+        attributes:
+          - {name: agency_id, kind: string, required: true, unique: true, description: Natural key of the agency.}
+          - name: agency_type
+            kind: enum
+            required: true
+            description: How the agency is engaged.
+            values:
+              CONTINGENCY: Paid on successful placement.
+              RETAINED: Paid a retainer for a search.
+              RPO: Recruitment process outsourcing.
+              STAFFING: Supplies temporary staff.
+          - {name: fee_structure, kind: string, description: How fees are calculated.}
+          - {name: vendor_contract_id, kind: uuid, description: 'entity_id of the agency''s contract. Target: VendorContract in the Procurement domain, which is not yet migrated (D6); this becomes a relationship when it is.'}
+          - {name: specialization, kind: string, description: Roles or industries the agency specialises in.}
+          - {name: performance_rating, kind: decimal, description: Rating of the agency's performance.}
+      - name: TalentPipeline
+        kind: Document
+        entityType: Supporting
+        taxonomy: HR / Talent Acquisition / Talent Pipeline/Pool (TA)
+        description: A curated pool of prospective candidates for future requisitions. Distinct from the internal talent pool used for succession.
+        attributes:
+          - {name: pipeline_id, kind: string, required: true, unique: true, description: Natural key of the pipeline.}
+          - {name: pipeline_name, kind: string, required: true, description: Display name of the pipeline.}
+          - {name: target_job_family, kind: string, description: Job family the pipeline is built for.}
+          - {name: candidate_count, kind: integer, description: Number of candidates in the pipeline.}
+          - {name: nurture_campaign, kind: string, description: Campaign used to keep candidates engaged.}
+          - {name: owner_role, kind: ref, target: EmployeeRole, description: The employee who owns the pipeline.}
+      - name: EmployeeReferral
+        kind: Document
+        entityType: Supporting
+        taxonomy: HR / Talent Acquisition / Employee Referral
+        description: A candidate referred by an employee, with referral-bonus tracking.
+        attributes:
+          - {name: referral_id, kind: string, required: true, unique: true, description: Natural key of the referral.}
+          - {name: referring_employee_role, kind: ref, target: EmployeeRole, required: true, description: The employee who made the referral.}
+          - {name: candidate, kind: ref, target: Candidate, required: true, description: The candidate referred.}
+          - {name: job_requisition, kind: ref, target: JobRequisition, description: The requisition the referral is for, if any.}
+          - {name: referral_date, kind: date, required: true, description: Date of the referral.}
+          - {name: bonus_eligible, kind: boolean, description: True when the referral qualifies for a bonus.}
+          - {name: bonus_paid_flag, kind: boolean, description: True once the bonus is paid.}
+      - name: InterviewPanelAssignment
+        kind: Role
+        entityType: Bridge/Junction
+        connects: [Interview, EmployeeRole]
+        taxonomy: HR / Talent Acquisition / Interview-Panel Assignment
+        description: >-
+          Which employees interview in which interviews (many-to-many), with each
+          interviewer's own feedback and recommendation. A Role: the interviewer
+          role an employee holds for one interview.
+        narrow: {role_type: [INTERVIEWER]}
+        attributes:
+          - {name: assignment_id, kind: string, required: true, unique: true, description: Natural key of the assignment.}
+          - {name: interview, kind: ref, target: Interview, required: true, description: The interview.}
+          - {name: interviewer_role, kind: ref, target: EmployeeRole, required: true, description: The employee interviewing.}
+          - name: panel_role
+            kind: enum
+            required: true
+            description: The interviewer's part on the panel.
+            values:
+              LEAD: Leads the interview.
+              MEMBER: Panel member.
+              SHADOW: Observes, for training.
+          - {name: feedback_submitted, kind: boolean, description: True once the interviewer has submitted feedback.}
+          - name: recommendation
+            kind: enum
+            description: The interviewer's recommendation.
+            values:
+              STRONG_YES: Strongly recommends hiring.
+              'YES': Recommends hiring.
+              'NO': Does not recommend hiring.
+              STRONG_NO: Strongly against hiring.
+      - name: RequisitionPositionLink
+        kind: Document
+        entityType: Bridge/Junction
+        connects: [JobRequisition, Position]
+        taxonomy: HR / Talent Acquisition / Requisition-Position Link
+        description: Which positions a requisition fills (many-to-many); a requisition can cover several identical positions.
+        attributes:
+          - {name: link_id, kind: string, required: true, unique: true, description: Natural key of the link.}
+          - {name: job_requisition, kind: ref, target: JobRequisition, required: true, description: The requisition.}
+          - {name: position, kind: ref, target: Position, required: true, description: A position it fills.}
+          - name: fill_type
+            kind: enum
+            required: true
+            description: Why the position is being filled.
+            values:
+              NEW: Newly created position.
+              BACKFILL: Replaces someone who left.
+              REPLACEMENT: Replaces someone who moved internally.
+          - {name: vacated_by_role, kind: ref, target: EmployeeRole, description: For a backfill or replacement, the employee who left the position.}
+      - name: CandidateSourceAttribution
+        kind: Document
+        entityType: Bridge/Junction
+        connects: [Candidate, CandidateSourceChannel]
+        taxonomy: HR / Talent Acquisition / Candidate-Source Attribution
+        description: Multi-touch attribution of a candidate to the channels that reached them (many-to-many). Drives accurate cost-per-hire.
+        attributes:
+          - {name: attribution_id, kind: string, required: true, unique: true, description: Natural key of the attribution.}
+          - {name: candidate, kind: ref, target: Candidate, required: true, description: The candidate.}
+          - {name: source_channel, kind: ref, target: CandidateSourceChannel, required: true, description: A channel that reached the candidate.}
+          - {name: touch_sequence, kind: integer, description: Order of this touch in the candidate's journey (1 = first).}
+          - {name: first_touch_flag, kind: boolean, description: True for the first touch.}
+          - {name: last_touch_flag, kind: boolean, description: True for the last touch before applying.}
+          - {name: attributed_cost, kind: value, target: AmountType, description: Share of the channel's cost attributed to this candidate.}
+      - name: SelectionDecision
+        kind: Activity
+        entityType: Core
+        taxonomy: HR / Talent Acquisition / Selection Decision
+        description: >-
+          A hiring decision on a job application at a stage of the process:
+          advance, reject, hold or hire, with who decided and why. Kept for audit
+          and adverse-impact analysis.
+        narrow: {activity_type: [EVENT]}
+        close_to_enum:
+          outcome:
+            description: The decision taken.
+            values:
+              ADVANCE: Move the application to the next stage.
+              REJECT: End the application.
+              HOLD: Keep the application waiting.
+              HIRE: Make an offer.
+        attributes:
+          - {name: decision_id, kind: string, required: true, unique: true, description: Natural key of the decision.}
+          - {name: job_application, kind: ref, target: JobApplication, required: true, description: The application decided on.}
+          - {name: decided_by, kind: ref, target: EmployeeRole, required: true, description: The employee who made the decision.}
+          - {name: decided_at, kind: datetime, required: true, description: When the decision was made.}
+          - {name: reason_code, kind: string, description: Coded reason for the decision.}
+          - {name: rationale, kind: string, description: Explanation of the decision.}
+
+  # ================================================================ Process
+  - name: CoreProcess
+    file: src/03_process/_core/CoreProcess.hck.json
+    layer: Process
+    steward: EDM architecture
+    description: >-
+      The core process model: definitions, steps and transitions (what a process
+      is), and instances, step completions and events (each run of it). Workflow
+      state lives here, never on Domain entities. Process definitions are data,
+      created by applications; there is no business-specific process in the EDM.
+    entities:
+      - {linkml: ProcessDefinition, kind: Document, entityType: Core}
+      - linkml: ProcessStep
+        kind: Activity
+        entityType: Core
+        attributes:
+          - {name: process_definition, kind: ref, target: ProcessDefinition, required: true, description: The definition version this step belongs to.}
+      - {linkml: ProcessTransition, kind: Document, entityType: Supporting}
+      - {linkml: ProcessInstance, kind: Activity, entityType: Core}
+      - {linkml: StepCompletion, kind: Activity, entityType: Supporting}
+      - {linkml: ProcessEvent, kind: Activity, entityType: Supporting}
+
+  # ================================================================ Application
+  - name: ApplicationShared
+    file: src/04_application/_shared/ApplicationShared.hck.json
+    layer: Application
+    steward: Application architecture
+    description: >-
+      Technical constructs shared by application models: where a record comes from
+      in its system of record, and how it is synchronised. Technical entities: no
+      Foundation kind.
+    entities:
+      - linkml: SourceSystemReference
+        entityType: Supporting
+        technical: true
+        prepend:
+          - name: entity_id
+            kind: uuid
+            required: true
+            pk: true
+            description: >-
+              The globally unique, system-generated surrogate identifier. Never
+              changes over the lifetime of the entity. This is the stable join key
+              used across every system, report, and integration that references this
+              entity. Business keys (employee number, invoice number) may change;
+              entity_id does not.
+        attributes:
+          - {name: referenced_entity_type, kind: string, required: true, description: Name of the EDM entity the reference is for, for example Position.}
+          - {name: referenced_entity_id, kind: uuid, required: true, description: entity_id of that entity, as used in the application's own tables.}
+      - {linkml: SyncMetadata, entityType: Supporting, technical: true}

@@ -1,0 +1,199 @@
+{
+  "lowerTab": "EDM",
+  "structure": {
+    "string": [
+      {
+        "propertyName": "Data classification",
+        "propertyKeyword": "dataClassification",
+        "propertyType": "select",
+        "options": [
+          "",
+          "Internal",
+          "PII",
+          "Sensitive PII"
+        ],
+        "propertyTooltip": "Personal-data classification of this attribute.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "EDM maps to",
+        "propertyKeyword": "edmMapsTo",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Brownfield models: the Domain entity.attribute this column maps to.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Semantic URI",
+        "propertyKeyword": "semanticUri",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "schema.org, SKOS or other vocabulary URI for this attribute.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Value definitions",
+        "propertyKeyword": "valueDefinitions",
+        "propertyType": "details",
+        "template": "textarea",
+        "propertyTooltip": "Enum attributes: one line per value, 'VALUE: meaning' (D3).",
+        "shouldValidate": false
+      }
+    ],
+    "numeric": [
+      {
+        "propertyName": "Data classification",
+        "propertyKeyword": "dataClassification",
+        "propertyType": "select",
+        "options": [
+          "",
+          "Internal",
+          "PII",
+          "Sensitive PII"
+        ],
+        "propertyTooltip": "Personal-data classification of this attribute.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "EDM maps to",
+        "propertyKeyword": "edmMapsTo",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Brownfield models: the Domain entity.attribute this column maps to.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Semantic URI",
+        "propertyKeyword": "semanticUri",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "schema.org, SKOS or other vocabulary URI for this attribute.",
+        "shouldValidate": false
+      }
+    ],
+    "boolean": [
+      {
+        "propertyName": "Data classification",
+        "propertyKeyword": "dataClassification",
+        "propertyType": "select",
+        "options": [
+          "",
+          "Internal",
+          "PII",
+          "Sensitive PII"
+        ],
+        "propertyTooltip": "Personal-data classification of this attribute.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "EDM maps to",
+        "propertyKeyword": "edmMapsTo",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Brownfield models: the Domain entity.attribute this column maps to.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Semantic URI",
+        "propertyKeyword": "semanticUri",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "schema.org, SKOS or other vocabulary URI for this attribute.",
+        "shouldValidate": false
+      }
+    ],
+    "document": [
+      {
+        "propertyName": "Data classification",
+        "propertyKeyword": "dataClassification",
+        "propertyType": "select",
+        "options": [
+          "",
+          "Internal",
+          "PII",
+          "Sensitive PII"
+        ],
+        "propertyTooltip": "Personal-data classification of this attribute.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "EDM maps to",
+        "propertyKeyword": "edmMapsTo",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Brownfield models: the Domain entity.attribute this column maps to.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Semantic URI",
+        "propertyKeyword": "semanticUri",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "schema.org, SKOS or other vocabulary URI for this attribute.",
+        "shouldValidate": false
+      }
+    ],
+    "array": [
+      {
+        "propertyName": "Data classification",
+        "propertyKeyword": "dataClassification",
+        "propertyType": "select",
+        "options": [
+          "",
+          "Internal",
+          "PII",
+          "Sensitive PII"
+        ],
+        "propertyTooltip": "Personal-data classification of this attribute.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "EDM maps to",
+        "propertyKeyword": "edmMapsTo",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Brownfield models: the Domain entity.attribute this column maps to.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Semantic URI",
+        "propertyKeyword": "semanticUri",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "schema.org, SKOS or other vocabulary URI for this attribute.",
+        "shouldValidate": false
+      }
+    ],
+    "binary": [
+      {
+        "propertyName": "Data classification",
+        "propertyKeyword": "dataClassification",
+        "propertyType": "select",
+        "options": [
+          "",
+          "Internal",
+          "PII",
+          "Sensitive PII"
+        ],
+        "propertyTooltip": "Personal-data classification of this attribute.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "EDM maps to",
+        "propertyKeyword": "edmMapsTo",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Brownfield models: the Domain entity.attribute this column maps to.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Semantic URI",
+        "propertyKeyword": "semanticUri",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "schema.org, SKOS or other vocabulary URI for this attribute.",
+        "shouldValidate": false
+      }
+    ]
+  }
+}

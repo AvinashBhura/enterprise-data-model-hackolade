@@ -1,0 +1,374 @@
+# EDM governance rules.
+#
+# Every configurable rule used by the Python checks in tools/ lives here, so a
+# rule changes without a code change. Each section names the check that reads it.
+# Spec: specs/0001-repository-and-governance-checks/spec.md
+
+version: 1
+
+# ---------------------------------------------------------------------------
+# Scope: which files the checks read. Paths are relative to the repository root.
+# ---------------------------------------------------------------------------
+scope:
+  roots: [src]
+  model_glob: "**/*.hck.json"
+
+# ---------------------------------------------------------------------------
+# Layers (check_layers, check_metadata, check_foundation_kind)
+# A model belongs to the layer whose path is the longest prefix of its path.
+# A model may depend only on models with the same or a lower rank.
+# A `_shared` folder belongs to the layer that contains it.
+# ---------------------------------------------------------------------------
+layers:
+  - name: Common
+    path: src/01_foundation/common
+    rank: 0
+  - name: Foundation
+    path: src/01_foundation
+    rank: 1
+  - name: Domain
+    path: src/02_domain
+    rank: 2
+  - name: Process
+    path: src/03_process
+    rank: 3
+  - name: Application
+    path: src/04_application
+    rank: 4
+
+# ---------------------------------------------------------------------------
+# Required metadata (check_metadata)
+# Custom property keywords, as configured in hackolade/customProperties/.
+# ---------------------------------------------------------------------------
+metadata:
+  required_model_properties: [edmLayer]
+  required_entity_properties: [layer, foundationKind, entityType, steward]
+  require_entity_description: true
+  allowed_values:
+    edmLayer: [Common, Foundation, Domain, Process, Application]
+    layer: [Common, Foundation, Domain, Process, Application]
+    entityType: [Core, Supporting, Bridge/Junction]
+
+# ---------------------------------------------------------------------------
+# Foundation kinds (check_foundation_kind)
+# Strict-Foundation rule: every Domain, Process and Application entity
+# specialises exactly one Foundation kind. Foundation entities name themselves;
+# Common entities use "none".
+# ---------------------------------------------------------------------------
+foundation:
+  kinds: [Person, Organization, LegalEntity, OrganizationalUnit, Team, Role,
+          Activity, Agreement, Asset, Address, Document, Period]
+  root: Entity
+  common_value: none
+  specialising_layers: [Domain, Process, Application]
+  # Kinds that specialise another kind inside the Foundation (LinkML is_a).
+  subkinds:
+    Organization: [LegalEntity, OrganizationalUnit]
+  # Folders of technical constructs shared by applications (for example where a
+  # record comes from in its source system). Their entities use common_value.
+  technical_paths: [src/04_application/_shared]
+
+# ---------------------------------------------------------------------------
+# Foundation contract (check_foundation_contract) — decision D12
+# Every Domain, Process and Application entity carries every attribute of its
+# Foundation kind, with the same type, as Foundation.hck.json defines it. Inside
+# the Foundation, each subkind carries its kind's attributes. Allowed changes:
+# required may be tightened (never loosened), and:
+# ---------------------------------------------------------------------------
+foundation_contract:
+  replaceable_enums: [lifecycle_state]       # each entity has its own lifecycle (D3)
+  narrowable_enums:                           # a specialisation keeps a subset of the values
+    - role_type                               # e.g. Candidate: [CANDIDATE]
+    - agreement_type                          # e.g. Offer: [OFFER]
+    - activity_type                           # e.g. Interview: [MEETING]
+    - organization_type                       # e.g. RecruitingAgency: [PARTNER]
+  string_to_enum: [outcome]                   # e.g. SelectionDecision.outcome: ADVANCE/REJECT/HOLD/HIRE
+
+# ---------------------------------------------------------------------------
+# Naming (check_naming)
+# Business names are what modellers see; technical names (Hackolade "code")
+# are produced by the naming convention for each target.
+# ---------------------------------------------------------------------------
+naming:
+  entity_business_name: '^[A-Z][A-Za-z0-9]*( [A-Z0-9][A-Za-z0-9]*)*$'   # "Job Requisition", "EmployeeRole"
+  attribute_business_name: '^[a-z][a-z0-9]*(_[a-z0-9]+)*$'             # snake_case: "given_name"
+  technical_name: '^[a-z][a-z0-9]*(_[a-z0-9]+)*$'                      # snake_case: "job_requisition"
+  max_technical_length: 63                                             # PostgreSQL identifier limit
+  abbreviation_file: hackolade/naming/abbreviations.csv
+  # Words that cannot be used as attribute or technical names (PostgreSQL reserved words).
+  # Quoted, so YAML does not read true/false/null/on as values.
+  reserved_words: ["all", "analyse", "analyze", "and", "any", "array", "as", "asc",
+    "asymmetric", "both", "case", "cast", "check", "collate", "column", "constraint",
+    "create", "current_catalog", "current_date", "current_role", "current_time",
+    "current_timestamp", "current_user", "default", "deferrable", "desc", "distinct", "do",
+    "else", "end", "except", "false", "fetch", "for", "foreign", "from", "grant", "group",
+    "having", "in", "initially", "intersect", "into", "lateral", "leading", "limit",
+    "localtime", "localtimestamp", "not", "null", "offset", "on", "only", "or", "order",
+    "placing", "primary", "references", "returning", "select", "session_user", "some",
+    "symmetric", "table", "then", "to", "trailing", "true", "union", "unique", "user",
+    "using", "variadic", "when", "where", "window", "with"]
+
+# ---------------------------------------------------------------------------
+# Data types (check_base_types)
+# Maps the type words used in contracts to how Hackolade stores an attribute.
+# A list means any of these values is accepted.
+# ---------------------------------------------------------------------------
+type_map:
+  string:   {type: string,  childType: [varchar, char, text, string]}
+  uuid:     {type: string,  childType: [uuid, varchar, char]}
+  date:     {type: string,  childType: [date]}
+  datetime: {type: string,  childType: [timestamp, timestamp_tz, timestamp_ntz, timestamp_ltz, datetime]}
+  decimal:  {type: numeric, childType: [number, decimal]}
+  integer:  {type: numeric, childType: [integer]}
+  boolean:  {type: boolean}
+  enum:     {type: string,  childType: [enum]}
+  object:   {type: document}
+  array:    {type: array}
+  ref:      {type: reference}
+
+# ---------------------------------------------------------------------------
+# Base-type contracts (check_base_types) — decision D2
+# An entity lists the contracts it follows in the `edmComposes` custom property
+# (semicolon-separated). Every listed contract's attributes must be present,
+# with these names, types and required flags. Descriptions are the text new
+# models must use. Type words: see type_map; "array<ref:X>" is an array whose
+# items reference X; "ref:X" references X.
+# ---------------------------------------------------------------------------
+base_types:
+  Entity:
+    description: Every Foundation concept carries the EDM surrogate key.
+    attributes:
+      entity_id:
+        type: uuid
+        required: true
+        primary_key: true
+        description: >-
+          The globally unique, system-generated surrogate identifier. Never
+          changes over the lifetime of the entity. This is the stable join key
+          used across every system, report, and integration that references this
+          entity. Business keys (employee number, invoice number) may change;
+          entity_id does not.
+  Identifiable:
+    description: >-
+      Entities that carry natural (business) identifiers in addition to
+      entity_id, and track audit timestamps.
+    attributes:
+      natural_identifiers:
+        type: array<ref:NaturalIdentifier>
+        required: false
+        description: >-
+          Zero or more natural (business) keys that identify this entity. Each
+          carries its own scheme and issuer so multiple identifier systems can
+          coexist without conflict.
+      created_at:
+        type: datetime
+        required: false
+        description: Timestamp when this entity record was created.
+      created_by:
+        type: string
+        required: false
+        description: >-
+          Actor who created this entity record. May be a user identifier, system
+          identifier, or service account name.
+      last_modified_at:
+        type: datetime
+        required: false
+        description: Timestamp of last modification to this entity record.
+      last_modified_by:
+        type: string
+        required: false
+        description: Actor who last modified this entity record.
+  Lifecycleable:
+    description: >-
+      Entities with an entity-level lifecycle state. Workflow state belongs in
+      the Process layer, not here.
+    attributes:
+      lifecycle_state:
+        # Document and Period have no lifecycle enum at the LinkML tag; their
+        # specialisations each set one, so a plain string is accepted.
+        type: enum|string
+        required: true
+      state_effective_from:
+        type: datetime
+        required: false
+        description: When the current lifecycle state became effective.
+      state_effective_to:
+        type: datetime
+        required: false
+        description: When the current lifecycle state ceases to be effective (if known).
+      state_history:
+        type: array<ref:StateTransition>
+        required: false
+        description: >-
+          Immutable history of lifecycle state transitions. Appended to on every
+          state change; never mutated in place.
+  Temporal:
+    description: >-
+      Entities with full bitemporal tracking: valid time (when the fact is true
+      in the real world) and record time (when the system knew it).
+    attributes:
+      valid_from:
+        type: datetime
+        required: false
+        description: Start of the real-world validity period.
+      valid_to:
+        type: datetime
+        required: false
+        description: End of the real-world validity period (open-ended if absent).
+      recorded_from:
+        type: datetime
+        required: false
+        description: When this record began to exist in the system.
+      recorded_to:
+        type: datetime
+        required: false
+        description: When this record ceased to exist in the system (if superseded).
+  Addressable:
+    description: >-
+      Entities that hold one or more Addresses. The purpose of each address
+      lives on Address.address_type.
+    attributes:
+      addresses:
+        type: array
+        required: false
+        description: >-
+          Zero or more Address references. An entity may have multiple
+          addresses (e.g., a customer with distinct billing and shipping
+          addresses; a Person with home and work addresses).
+  RoleHolder:
+    description: >-
+      Entities that can hold Roles. No attribute: the entity is a valid target
+      of Role.held_by_person or Role.held_by_organization.
+    attributes: {}
+  Classifiable:
+    description: >-
+      Entities that can be classified in a taxonomy. No attribute: the entity
+      may be a target of transaction_hierarchy (decision D11).
+    attributes: {}
+
+# ---------------------------------------------------------------------------
+# Enumerations (check_enums) — decision D3
+# The same attribute name must carry the same enum values everywhere, except:
+# ---------------------------------------------------------------------------
+enums:
+  per_entity_attributes: [lifecycle_state]   # each entity has its own lifecycle enum
+  intended_differences:
+    - role_type           # narrowed per Role specialisation (foundation_contract.narrowable_enums)
+    - agreement_type      # narrowed per Agreement specialisation
+    - activity_type       # narrowed per Activity specialisation
+    - organization_type   # narrowed per Organization specialisation
+    - outcome             # free text on Activity; closed to an enum on SelectionDecision
+    - status              # different lists on TaxonomyVersion and Taxonomy (string)
+
+# ---------------------------------------------------------------------------
+# Polymorphic references (check_references)
+# A pair <name>_entity_type + <name>_entity_id points to "any of" several entity
+# types without a relationship. Each type attribute must be listed here, with
+# the entity names it may hold. A rule on a Foundation kind also applies to
+# every entity that specialises it (foundationKind, foundation.subkinds), since
+# those entities carry the kind's attributes (D12). A rule is checked only once
+# the entity that owns it exists in the repository.
+# Organization is abstract (never a table), so references to it are pairs.
+# ---------------------------------------------------------------------------
+polymorphic_references:
+  # Foundation
+  - entity: Organization
+    type_attribute: parent_organization_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: Team
+    type_attribute: sponsoring_organization_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: Team
+    type_attribute: primary_organization_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: Role
+    type_attribute: held_by_organization_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: Role
+    type_attribute: engaging_party_entity_type
+    allowed: [Person, Organization, LegalEntity, OrganizationalUnit, Team]
+  - entity: Activity
+    type_attribute: participant_entity_type
+    allowed: [Person, Organization, LegalEntity, OrganizationalUnit, Team, Role]
+  - entity: Activity
+    type_attribute: primary_actor_entity_type
+    allowed: [Person, Organization, LegalEntity, OrganizationalUnit, Team, Role]
+  - entity: Agreement
+    type_attribute: party_entity_type
+    allowed: [Person, Organization, LegalEntity, OrganizationalUnit, Team]
+  - entity: Asset
+    type_attribute: owning_organization_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: Asset
+    type_attribute: acquired_from_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: Asset
+    type_attribute: custodian_entity_type
+    allowed: [Person, Organization, LegalEntity, OrganizationalUnit, Team, Role]
+  # Common
+  - entity: StateTransition
+    type_attribute: transitioned_by_entity_type
+    allowed: [Person, Role, Team]
+  # Domain: HR
+  - entity: EmployeeRole
+    type_attribute: employing_organization_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: ContractorRole
+    type_attribute: engaging_organization_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: ContractorRole
+    type_attribute: contracting_through_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: AlumniRole
+    type_attribute: former_employer_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: ManagerRole
+    type_attribute: managed_organization_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  # Process
+  - entity: ProcessDefinition
+    type_attribute: applies_to_organization_entity_type
+    allowed: [LegalEntity, OrganizationalUnit]
+  - entity: ProcessInstance
+    type_attribute: subject_entity_type
+    allowed: [JobApplication]
+  # Application
+  - entity: SourceSystemReference
+    type_attribute: referenced_entity_type
+    allowed: [Position, EmployeeRole, CompensationPackage, EmploymentContract,
+              EmployeeConsentRecord, LegalEntity, Role]
+  # Common taxonomy model (D11): the classified record of a TransactionHierarchy row
+  - entity: TransactionHierarchy
+    type_attribute: transaction_entity
+    id_attribute: transaction_id
+    allowed: [Person, Organization, LegalEntity, OrganizationalUnit, Team, Role,
+              Activity, Agreement, Asset, Address, Position]
+
+# ---------------------------------------------------------------------------
+# Derived models (check_deviations)
+# Deviations are local changes a derived model makes to an entity it inherited
+# through polyglot derivation. Hackolade stores them in `referenceDiff`.
+# ---------------------------------------------------------------------------
+deviations:
+  forbidden_from_layers: [Common, Foundation]   # derived Foundation/Common entities are never changed locally
+  reason_property: deviationReason
+  # referenceDiff keys that are not modelling changes: Hackolade bookkeeping, and
+  # technical names (`code`), which each target's naming convention produces and
+  # check_naming validates.
+  ignored_keys: [GUID, hackoladeMeta, error, childRelationships, parentRelationship,
+                 relationshipType, foreignCollection, foreignField, code]
+  # In a physical model, a change of physical data type (for example text to the
+  # PostgreSQL uuid type) is a target-specific choice, allowed even on entities
+  # derived from the Foundation, but it still needs a reason.
+  physical_type_keys: [childType, mode, timezone, length, precision, scale]
+
+# ---------------------------------------------------------------------------
+# Model file format (check_format) — decision D9
+# ---------------------------------------------------------------------------
+format:
+  persistence_schema_versions: ["8"]
+  min_studio_version: "8.13.0"
+  # Decision D12: until docs/workflows/studio-verification.md is done, model files
+  # written by migration/build.py (model property edmBuiltBy) are accepted although
+  # no Studio 8.13+ has saved them yet. Set to false when verification is done.
+  accept_builder_output: true

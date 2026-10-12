@@ -1,0 +1,48 @@
+Term_ID,Term,Description,Domain
+edm-application-layer,Application Layer,"Layer 5. Physical data models for specific applications, derived from Domain and Process models (greenfield) or reverse-engineered from existing databases (brownfield).",Core
+edm-base-type,Base Type,"A reusable set of attributes that entities follow: Entity, Identifiable, Lifecycleable, Addressable, RoleHolder, Classifiable, Temporal. Each entity declares the attributes itself and lists the base types it follows in edmComposes; the contract for each is in config/edm-rules.yaml (decision D2).",Core
+edm-capability,Capability,*What* the business can do. A noun-phrase. Modeled in the Domain layer. Distinct from Process (*how* it's executed).,Core
+edm-classification,Classification,"The placement of a business record under a node of a taxonomy. Recorded, with its history, in transaction_hierarchy (decision D11).",Core
+edm-common-sub-layer,Common Sub-Layer,Nested under Foundation. Holds reusable construction material: composite value types and the generic taxonomy model.,Core
+edm-domain-layer,Domain Layer,"Layer 3. Capability-aligned stable nouns. Each business function (HR, Finance, Sales, etc.) owns its piece, one model per subdomain.",Core
+edm-edm,EDM,Enterprise Data Model. This project.,Core
+edm-entity,Entity,The semantic anchor of the EDM: every Foundation concept is an Entity and carries entity_id.,Core
+edm-entity-id,Entity ID,"The globally unique surrogate identifier (UUID) every Entity carries. Stable across all systems, reorganizations, integrations.",Core
+edm-enumeration,Enumeration,"A closed list of allowed values, held as an enum on the attribute that uses it (decision D3). Examples: lifecycle states, role types.",Core
+edm-foundation-layer,Foundation Layer,"Layer 1. Permanent enterprise concepts: Person, Organization (LegalEntity, OrganizationalUnit), Team, Role, Activity, Agreement, Asset, Address, Document, Period.",Core
+edm-natural-identifier,Natural Identifier,"A business key (e.g., employee_number, tax_id, vendor_number). Lives on canonical entities via Identifiable when enterprise-issued, or in application models when vendor-issued.",Core
+edm-polymorphic-reference,Polymorphic Reference,"A reference that may point to more than one kind of entity, held as a pair <name>_entity_type + <name>_entity_id with no relationship. The allowed types are listed in config/edm-rules.yaml.",Core
+edm-process-definition,Process Definition,A versioned workflow specification. Multiple versions may coexist; instances bind to a single version for life.,Core
+edm-process-instance,Process Instance,A live execution of a Process Definition. Bound immutably to a single definition version (Frozen-Contract principle).,Core
+edm-process-layer,Process Layer,Layer 4. Workflows and instances. References Domain entities; never modifies them (Borrower principle).,Core
+edm-reference-data,Reference Data,"The values of a code list or taxonomy (countries, currencies, job families). Data, not schema: the EDM stores the rules for these values, never the values themselves.",Core
+edm-role,Role,"A time-bound engagement of a Person or Organization with another party. The universal pivot for ""who plays what with whom"" relationships. Specialized in Domain (EmployeeRole, Candidate, etc.).",Core
+edm-source-system-reference,Source-System Reference,Pattern in Application layer: every application record that mirrors an entity owned elsewhere records its source system and source id.,Core
+edm-subject-entity,Subject Entity,The Domain-layer entity a ProcessInstance operates on. Captured by subject_entity_id + subject_entity_type.,Core
+edm-surrogate-key,Surrogate Key,System-generated identifier (UUID) that never changes. Distinct from natural keys (business identifiers that may change). Both coexist in the EDM.,Core
+edm-taxonomy,Taxonomy,"A hierarchical classification (categories and their containment). Stored as data in the Common taxonomy model, with full version history (decision D11).",Core
+edm-transaction-hierarchy,Transaction Hierarchy,"The append-only record of which taxonomy node a business record was classified under, when, and with which paths. ""Transaction"" here means any classified business record, not a financial transaction.",Core
+edm-value-type,Value Type,"A self-contained composite value structure with no independent identity, reused by external reference. Examples: AmountType (value + currency), QuantityType (value + unit), DocumentType, StateTransition, NaturalIdentifier.",Core
+edm-custom-property,Custom Property,"EDM metadata stored on a model object (for example foundationKind, entityType, steward). Configured in hackolade/customProperties/ and checked by tools/.",Hackolade
+edm-derivation,Derivation,Creating a model from one or more polyglot models (polyglotDerive). The parent stays the master; the derived model keeps local changes as deviations and is refreshed with polyglotUpdate.,Hackolade
+edm-deviation,Deviation,A local change a derived model makes to an entity it inherited. Deviations on entities derived from Foundation or Common are not allowed; others need a deviationReason.,Hackolade
+edm-external-reference,External Reference,"Reuse of an entity, attribute or definition from another model file by relative path. Read-only in the model that uses it; refreshed with extRefUpdate.",Hackolade
+edm-model-definition,Model Definition,"A reusable structure inside one model, such as a value type.",Hackolade
+edm-physical-model,Physical Model,"A model for one target technology (for example PostgreSQL), from which Hackolade generates DDL.",Hackolade
+edm-polyglot-model,Polyglot Model,"A technology-neutral logical model. Foundation, Common, Domain and Process models are polyglot models.",Hackolade
+edm-supertype-group,Supertype Group,"Hackolade's inheritance construct: a supertype, its subtypes, and the strategy that decides how inheritance becomes tables.",Hackolade
+edm-lifecycle-state,Lifecycle State,"Coarse entity-level state (Active, Inactive, Archived, etc.). Lives on entities via the Lifecycleable base type. Distinct from process workflow state.",Lifecycle
+edm-state-transition,State Transition,A recorded change from one lifecycle state to another. Stored in state_history on Lifecycleable entities.,Lifecycle
+edm-workflow-state,Workflow State,Fine-grained state managed by ProcessInstance. Distinct from entity-level lifecycle state.,Lifecycle
+edm-bounded-context,Bounded Context,"A capability's ""turf"" — the set of entities it owns and is the primary steward for. One polyglot model per bounded context.",Architectural
+edm-borrower-principle,Borrower Principle,Process references Domain; Process never modifies Domain.,Architectural
+edm-capability-centricity,Capability-Centricity,Domain models capabilities (what the business is) rather than processes (how it runs).,Architectural
+edm-frozen-contract,Frozen-Contract,A ProcessInstance's binding to a definition version is set at instance creation and never changes.,Architectural
+edm-highlander-principle,Highlander Principle,There can be only one. Each concept exists once across the enterprise.,Architectural
+edm-one-way-gate,One-Way Gate,Dependencies flow upward only. Foundation knows nothing of Application.,Architectural
+edm-operational-rule,Operational Rule,An enforceable constraint backed by tooling and tests. Distinct from a principle (aspirational).,Architectural
+edm-primary-stewardship,Primary Stewardship,Each Domain entity has exactly one primary-steward capability that owns it.,Architectural
+edm-reusability-test,Reusability Test,"Before placing anything in Common, ask: ""Would another enterprise with a different business need this?""",Architectural
+edm-role-immutability,Role Immutability,"Roles do not mutate core terms. Changes end one Role and begin another, preserving history.",Architectural
+edm-single-owner-principle,Single Owner Principle,See Primary Stewardship.,Architectural
+edm-snapshot-principle,Snapshot Principle,Every ProcessDefinition is versioned; instances bind to a snapshot.,Architectural

@@ -1,0 +1,757 @@
+{
+  "modelName": "CommonValueTypes",
+  "collections": [
+    {
+      "GUID": "a639ae60-cd63-5fc7-8113-fa5aa90c4635",
+      "collectionName": "AmountType",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "e8f725e9-e17a-5bee-8b17-60f505c1b0be",
+          "name": "value",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The numeric amount (positive or negative).",
+          "type": "numeric",
+          "childType": "number",
+          "mode": "decimal",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "0c348855-1fcb-5c8b-a4df-e40921eb992c",
+          "name": "currency",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "ISO 4217 currency code (USD, EUR, GBP, JPY, ...). Format: ISO 4217 three-letter currency code.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[A-Z]{3}$"
+        },
+        {
+          "GUID": "bed9553f-ee87-5333-8809-dc68a4f58d24",
+          "name": "precision",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Decimal precision (digits after the decimal point). Defaults to the currency's standard minor-unit precision if omitted (typically 2 for most currencies, 0 for JPY, 3 for KWD, etc.).",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "b07059f1-c4cb-573a-85cb-675070d3a80d"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37550865-98a5-5e32-ae10-1c6303ca5f7d",
+      "description": "A monetary amount: a decimal numeric value with its ISO 4217 currency code. Used wherever money appears in the model.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "EDM architecture",
+      "edmValueType": true
+    },
+    {
+      "GUID": "d2d80365-dac3-50c9-bffb-54735221c00b",
+      "collectionName": "QuantityType",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "115c95db-b3ab-5904-9b1b-d4cde4261812",
+          "name": "value",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The numeric value of the quantity.",
+          "type": "numeric",
+          "childType": "number",
+          "mode": "decimal",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "b252344e-0dc0-5c99-bd9a-83c8318145eb",
+          "name": "unit_of_measure",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Standardized unit of measure code. Format: UN/CEFACT Recommendation 20 unit code.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[A-Z0-9]{2,3}$"
+        },
+        {
+          "GUID": "cb47a206-515b-5f70-a3d9-2a86ed6bf8a8",
+          "name": "precision",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Optional decimal precision for this measurement.",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "70c7a61d-68ee-56c3-bab4-1f6ac4fd5a30"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37550865-98a5-5e32-ae10-1c6303ca5f7d",
+      "description": "A quantity: a numeric value with its unit of measure. The unit is drawn from a standard codelist (UN/CEFACT or ISO 80000) to ensure consistent interpretation across systems.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "EDM architecture",
+      "edmValueType": true
+    },
+    {
+      "GUID": "35651dbf-8574-5bb3-b0ef-86aa589aadfb",
+      "collectionName": "DocumentType",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "a0c3cf71-3a5a-51f6-ab65-d4977daf96c6",
+          "name": "system_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Identifier of the document within its source system (URI, document ID, file path).",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "4bcfdc9c-4709-544b-94ae-103fb7901404",
+          "name": "source_system",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The document management system that holds this document (e.g., \"sharepoint\", \"google-drive\", \"docusign-envelope\").",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "b3ee7178-10f0-50a2-8ff9-0ed235d514dc",
+          "name": "version",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Document version identifier.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "7c8d405a-47f2-5358-b769-e393acd17675",
+          "name": "status",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Document status (e.g., \"draft\", \"final\", \"signed\", \"archived\"). Free-text because document status vocabularies vary widely across DMS platforms.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "ecdcfd44-7b06-584a-951f-45d465502224",
+          "name": "title",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Human-readable document title.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "99c43912-96e4-54e2-a6a3-78f14edcde76",
+          "name": "mime_type",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "MIME type of the document (e.g., \"application/pdf\").",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "74276423-4a83-5a0f-9df2-78128bcfa934",
+          "name": "url",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Direct URL to retrieve the document (if available).",
+          "type": "string",
+          "childType": "varchar",
+          "format": "uri"
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "7f0ca942-8ddb-5172-a3cb-7f4266e58a70"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37550865-98a5-5e32-ae10-1c6303ca5f7d",
+      "description": "A reference to a document stored in an external document management system (SharePoint, Google Drive, DocuSign, etc.).",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "EDM architecture",
+      "edmValueType": true
+    },
+    {
+      "GUID": "436c6c92-44d5-50d5-9d44-c9a5626516b2",
+      "collectionName": "StateTransition",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "3f9b61f5-37c5-512f-a117-2fb8f1e4f97e",
+          "name": "from_state",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The prior lifecycle state (as enum string value).",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "f933842c-aec2-5979-8bd1-58b21e7aeb13",
+          "name": "to_state",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The new lifecycle state (as enum string value).",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "9212f633-7e26-5d79-bc03-1aded064797c",
+          "name": "transition_timestamp",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the transition occurred.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "5b28799a-56e5-5702-8875-7cf315ef9e05",
+          "name": "transitioned_by_entity_type",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Entity type of transitioned by: one of Person, Role, Team. Polymorphic reference: no relationship (docs/patterns/polymorphic_references.md).",
+          "type": "string",
+          "childType": "enum",
+          "enum": [
+            "Person",
+            "Role",
+            "Team"
+          ]
+        },
+        {
+          "GUID": "12f7f2c0-9377-51ea-a2d6-1139db2beee6",
+          "name": "transitioned_by_entity_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The actor responsible for the transition. Typically references a Person (via their entity_id), but may be a system/service account in automated transitions.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        {
+          "GUID": "4e563d09-1932-549b-9762-8b2b5afc900f",
+          "name": "reason",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Free-text reason or note explaining the transition.",
+          "type": "string",
+          "childType": "varchar"
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "cb5839a4-7e1d-5c76-a228-2287a2fdd8a2"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37550865-98a5-5e32-ae10-1c6303ca5f7d",
+      "description": "A single transition from one lifecycle state to another. Captured as immutable history on any Lifecycleable entity. Enables audit trails and point-in-time reconstruction of lifecycle history.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "EDM architecture",
+      "edmValueType": true
+    },
+    {
+      "GUID": "5a24e7c2-b043-5507-a0a9-1a1de29c442b",
+      "collectionName": "NaturalIdentifier",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "b22c39ae-61a8-5f65-9b43-2b1a65c6c173",
+          "name": "value",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The identifier value itself.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "c77af7cc-ed17-5905-9faa-d91cadb707d6",
+          "name": "scheme",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The naming/numbering scheme. Examples: \"employee_number\", \"tax_id\", \"iso_country_code\", \"ein\", \"ssn\".",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "273ebf71-3fb2-5d50-89d8-32a7c6e376b4",
+          "name": "issuer",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The authority that issued this identifier. Examples: \"Acme HR\", \"IRS\", \"ISO\", \"National Social Security Administration\".",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "8e025388-740a-5b9c-90d6-2cd72babc10f",
+          "name": "issued_at",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the identifier was issued (if known).",
+          "type": "string",
+          "childType": "date"
+        },
+        {
+          "GUID": "65e2c827-873b-5c97-90f0-97e642daba73",
+          "name": "valid_from",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When this identifier becomes effective.",
+          "type": "string",
+          "childType": "date"
+        },
+        {
+          "GUID": "52ad1142-e0a8-5e6e-a7da-7d2a19ea5ff4",
+          "name": "valid_to",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When this identifier ceases to be effective (for reissued keys).",
+          "type": "string",
+          "childType": "date"
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "e1c1a7ae-20af-5c3f-ae7c-f4a53468449c"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37550865-98a5-5e32-ae10-1c6303ca5f7d",
+      "description": "A natural/business identifier value paired with the scheme that issued it and the issuer. Example: value=\"E10847\", scheme=\"Acme employee number\", issuer=\"Acme Corp HR\".",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "EDM architecture",
+      "edmValueType": true
+    }
+  ],
+  "buckets": [
+    {
+      "name": "CommonValueTypes",
+      "type": "bucket",
+      "collectionIds": [
+        "a639ae60-cd63-5fc7-8113-fa5aa90c4635",
+        "d2d80365-dac3-50c9-bffb-54735221c00b",
+        "35651dbf-8574-5bb3-b0ef-86aa589aadfb",
+        "436c6c92-44d5-50d5-9d44-c9a5626516b2",
+        "5a24e7c2-b043-5507-a0a9-1a1de29c442b"
+      ],
+      "backgroundColor": {
+        "r": 0,
+        "g": 188,
+        "b": 212,
+        "a": 1
+      },
+      "show": true,
+      "isActivated": true,
+      "GUID": "37550865-98a5-5e32-ae10-1c6303ca5f7d",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "description": "Shared composite value types (D2). Each is an entity marked as a value type (edmValueType): never a table on its own, reused by other models through an entity-level external reference."
+    }
+  ],
+  "views": [],
+  "relationships": [],
+  "users": [],
+  "diagramViews": [],
+  "idToNameHashTable": {
+    "a639ae60-cd63-5fc7-8113-fa5aa90c4635": "AmountType",
+    "e8f725e9-e17a-5bee-8b17-60f505c1b0be": "value",
+    "0c348855-1fcb-5c8b-a4df-e40921eb992c": "currency",
+    "bed9553f-ee87-5333-8809-dc68a4f58d24": "precision",
+    "d2d80365-dac3-50c9-bffb-54735221c00b": "QuantityType",
+    "115c95db-b3ab-5904-9b1b-d4cde4261812": "value",
+    "b252344e-0dc0-5c99-bd9a-83c8318145eb": "unit_of_measure",
+    "cb47a206-515b-5f70-a3d9-2a86ed6bf8a8": "precision",
+    "35651dbf-8574-5bb3-b0ef-86aa589aadfb": "DocumentType",
+    "a0c3cf71-3a5a-51f6-ab65-d4977daf96c6": "system_id",
+    "4bcfdc9c-4709-544b-94ae-103fb7901404": "source_system",
+    "b3ee7178-10f0-50a2-8ff9-0ed235d514dc": "version",
+    "7c8d405a-47f2-5358-b769-e393acd17675": "status",
+    "ecdcfd44-7b06-584a-951f-45d465502224": "title",
+    "99c43912-96e4-54e2-a6a3-78f14edcde76": "mime_type",
+    "74276423-4a83-5a0f-9df2-78128bcfa934": "url",
+    "436c6c92-44d5-50d5-9d44-c9a5626516b2": "StateTransition",
+    "3f9b61f5-37c5-512f-a117-2fb8f1e4f97e": "from_state",
+    "f933842c-aec2-5979-8bd1-58b21e7aeb13": "to_state",
+    "9212f633-7e26-5d79-bc03-1aded064797c": "transition_timestamp",
+    "5b28799a-56e5-5702-8875-7cf315ef9e05": "transitioned_by_entity_type",
+    "12f7f2c0-9377-51ea-a2d6-1139db2beee6": "transitioned_by_entity_id",
+    "4e563d09-1932-549b-9762-8b2b5afc900f": "reason",
+    "5a24e7c2-b043-5507-a0a9-1a1de29c442b": "NaturalIdentifier",
+    "b22c39ae-61a8-5f65-9b43-2b1a65c6c173": "value",
+    "c77af7cc-ed17-5905-9faa-d91cadb707d6": "scheme",
+    "273ebf71-3fb2-5d50-89d8-32a7c6e376b4": "issuer",
+    "8e025388-740a-5b9c-90d6-2cd72babc10f": "issued_at",
+    "65e2c827-873b-5c97-90f0-97e642daba73": "valid_from",
+    "52ad1142-e0a8-5e6e-a7da-7d2a19ea5ff4": "valid_to",
+    "37550865-98a5-5e32-ae10-1c6303ca5f7d": "CommonValueTypes"
+  },
+  "definitions": {
+    "type": "definitions",
+    "properties": [],
+    "GUID": "4172dc80-3cce-54d6-9b95-dd8ee45d6657"
+  },
+  "polyglotDefinitions": {
+    "type": "polyglotDefinitions",
+    "properties": [],
+    "GUID": "533ce856-da2f-5bd7-a8a0-553464a54c4e"
+  },
+  "externalDefinitions": {
+    "type": "externalDefinitions",
+    "properties": [],
+    "GUID": "daa1f413-5aaa-55c4-ac76-9cf442ea5823"
+  },
+  "sources": [],
+  "decorativeSymbols": [],
+  "businessGlossaries": [],
+  "businessGlossaryTerms": [],
+  "dbVendor": "Polyglot",
+  "appTarget": "Polyglot",
+  "creationTS": "2026-10-12T12:00:00.000Z",
+  "GUID": "76f87064-9f61-5431-b860-69570477288c",
+  "isLineageEnabled": false,
+  "polyglotModelPaths": [],
+  "lastModifTS": "2026-10-12T12:00:00.000Z",
+  "persistenceSchemaVersion": "8",
+  "isCreatedByPlugin": true,
+  "pluginInformation": {
+    "pluginName": "Polyglot",
+    "pluginVersion": "0.0.1",
+    "pluginEngineVersion": "1.0.0"
+  },
+  "applicationInformation": {
+    "version": "8.11.6"
+  },
+  "hackoladeMeta": {
+    "validationErrors": {}
+  },
+  "description": "Shared composite value types (D2). Each is an entity marked as a value type (edmValueType): never a table on its own, reused by other models through an entity-level external reference.",
+  "settings": {
+    "centralPane": {
+      "dbLevel": {
+        "erd": [
+          {
+            "GUID": "a639ae60-cd63-5fc7-8113-fa5aa90c4635",
+            "x": 1000,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "d2d80365-dac3-50c9-bffb-54735221c00b",
+            "x": 1420,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "35651dbf-8574-5bb3-b0ef-86aa589aadfb",
+            "x": 1840,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "436c6c92-44d5-50d5-9d44-c9a5626516b2",
+            "x": 2260,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "5a24e7c2-b043-5507-a0a9-1a1de29c442b",
+            "x": 1000,
+            "y": 1520,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          }
+        ],
+        "erdDefinitions": {
+          "erd": [],
+          "rootPath": [],
+          "entities": [],
+          "decorativeSymbols": []
+        },
+        "buckets": [],
+        "collapsedNodes": [],
+        "activeRelationship": "",
+        "activeRelationshipFields": {
+          "childField": [],
+          "parentField": []
+        },
+        "selectedCollections": [],
+        "displayColorPicker": false,
+        "graphView": {
+          "erd": [],
+          "buckets": [],
+          "decorativeSymbols": [],
+          "forceLayout": true,
+          "defaultLinkLength": 300
+        },
+        "diagramViews": [],
+        "decorativeSymbols": [],
+        "nestedCollectionsLayout": "horizontal",
+        "options": [],
+        "relationshipUpdateDisabled": false
+      },
+      "collectionLevel": {},
+      "changed": false
+    },
+    "dtDiagram": {
+      "collapsedNodes": [],
+      "shouldDistributeCollections": false
+    }
+  },
+  "edmBuiltBy": "migration/build.py",
+  "edmLayer": "Common"
+}

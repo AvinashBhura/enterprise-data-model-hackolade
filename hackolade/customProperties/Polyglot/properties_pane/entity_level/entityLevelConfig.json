@@ -1,0 +1,129 @@
+[
+  {
+    "lowerTab": "EDM",
+    "structure": [
+      {
+        "propertyName": "Layer",
+        "propertyKeyword": "layer",
+        "propertyType": "select",
+        "options": [
+          "",
+          "Common",
+          "Foundation",
+          "Domain",
+          "Process",
+          "Application"
+        ],
+        "propertyTooltip": "EDM layer of this entity; same as the model's layer (check_metadata).",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Foundation kind",
+        "propertyKeyword": "foundationKind",
+        "propertyType": "select",
+        "options": [
+          "",
+          "none",
+          "Entity",
+          "Person",
+          "Organization",
+          "LegalEntity",
+          "OrganizationalUnit",
+          "Team",
+          "Role",
+          "Activity",
+          "Agreement",
+          "Asset",
+          "Address",
+          "Document",
+          "Period"
+        ],
+        "propertyTooltip": "The one Foundation kind this entity specialises. Foundation entities name themselves; Common entities use 'none' (check_foundation_kind).",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Entity type",
+        "propertyKeyword": "entityType",
+        "propertyType": "select",
+        "options": [
+          "",
+          "Core",
+          "Supporting",
+          "Bridge/Junction"
+        ],
+        "propertyTooltip": "Core, Supporting or Bridge/Junction, as in the domain taxonomy.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Steward",
+        "propertyKeyword": "steward",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Role or team accountable for this entity.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Composes base types",
+        "propertyKeyword": "edmComposes",
+        "propertyType": "multipleCheckboxSelect",
+        "options": [
+          "Entity",
+          "Identifiable",
+          "Lifecycleable",
+          "Temporal",
+          "Addressable",
+          "RoleHolder",
+          "Classifiable"
+        ],
+        "propertyTooltip": "Base-type contracts this entity follows; their attributes must match config/edm-rules.yaml (check_base_types, D2).",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Connects",
+        "propertyKeyword": "edmConnects",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Bridge/Junction entities only: the two entities this junction connects, separated by a semicolon, e.g. 'Interview;EmployeeRole' (check_junctions).",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Value type",
+        "propertyKeyword": "edmValueType",
+        "propertyType": "checkbox",
+        "propertyTooltip": "Common only: a shared composite value type (AmountType...). Reused by external reference; never a table on its own (D12).",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Abstract",
+        "propertyKeyword": "edmAbstract",
+        "propertyType": "checkbox",
+        "propertyTooltip": "Never becomes a table (Entity, Organization). Also set Hackolade's own 'Polyglot only' flag (D12).",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Semantic URI",
+        "propertyKeyword": "semanticUri",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "schema.org, SKOS or other vocabulary URI for this concept.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Source taxonomy row",
+        "propertyKeyword": "sourceTaxonomyRef",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Where this entity comes from in the domain taxonomy workbook, e.g. 'HR / Talent Acquisition / Job Requisition'.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Deviation reason",
+        "propertyKeyword": "deviationReason",
+        "propertyType": "details",
+        "template": "textarea",
+        "propertyTooltip": "Derived models only: why this entity differs from its parent (check_deviations).",
+        "shouldValidate": false
+      }
+    ]
+  }
+]

@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# LinkML generated artifacts
+generated/
+*.generated.json
+*.generated.py
+*.generated.sql
+*.generated.ttl
+*.generated.shacl.ttl
+*.generated.graphql
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+
+# Secrets (never commit)
+.env
+.env.local
+secrets/
+
+# Test artifacts
+.coverage
+htmlcov/
+coverage.xml

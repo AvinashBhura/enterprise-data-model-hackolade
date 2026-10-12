@@ -1,0 +1,466 @@
+{
+  "modelName": "ApplicationShared",
+  "collections": [
+    {
+      "GUID": "0c2033f0-3b9f-5020-8952-d497eeee1de7",
+      "collectionName": "SourceSystemReference",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "a7abda26-a436-506d-b8ce-a71f89d9438e",
+          "name": "entity_id",
+          "isActivated": true,
+          "primaryKey": true,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The globally unique, system-generated surrogate identifier. Never changes over the lifetime of the entity. This is the stable join key used across every system, report, and integration that references this entity. Business keys (employee number, invoice number) may change; entity_id does not.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        {
+          "GUID": "30f61c7e-96af-59aa-a9a6-f5f0911128a0",
+          "name": "source_system",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "9b8b9e37-935e-5bcd-b34e-6c9225215dc1",
+          "name": "source_record_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "6232c3c1-2c68-5def-bbda-cd6bdd0476c0",
+          "name": "source_record_url",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Optional deep link to the record in the source system UI.",
+          "type": "string",
+          "childType": "varchar",
+          "format": "uri"
+        },
+        {
+          "GUID": "d7ebddb5-5072-5bf9-8541-11a093fc1812",
+          "name": "authoritative",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Whether this source is the system of record for this attribute set.",
+          "type": "boolean",
+          "childType": "boolean"
+        },
+        {
+          "GUID": "813c66db-afda-5665-9b44-d75cb2021259",
+          "name": "referenced_entity_type",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Name of the EDM entity the reference is for",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "dd5b2e1c-638e-55ff-bdc5-af7891e947a2",
+          "name": "referenced_entity_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "entity_id of that entity",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "e4afdfed-9668-5f09-9e3c-eaa7acd2d367"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "5e25632f-b409-51e2-af09-9d45bbaac013",
+      "description": "A reference to an entity's representation in a source system.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Application",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "Application architecture",
+      "edmComposes": [
+        "Entity"
+      ]
+    },
+    {
+      "GUID": "0f9dc8d0-f574-5383-a5e4-4e741a76159a",
+      "collectionName": "SyncMetadata",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "a4b1f688-42b8-5e63-8389-1dacbd12edc6",
+          "name": "source_system",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Source system identifier (e.g., \"workday\", \"salesforce\", \"sap\").",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "e31d1e55-46f0-5d3e-9cb2-6100faabf688",
+          "name": "source_record_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Native identifier of this record in its source system.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "8a9c3ceb-d8ed-5861-8ffb-94da2c49bbad",
+          "name": "source_record_version",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Source-system version identifier (etag, version number).",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "766bada1-79ab-5b9e-a008-a13fb213f643",
+          "name": "last_synced_at",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "42510b1d-d7ff-50c0-b5e6-1408c29dc19f",
+          "name": "last_sync_attempt_at",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "854e43d9-fb0c-5d1c-9f19-4443f930ac12",
+          "name": "sync_status",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "type": "string",
+          "childType": "enum",
+          "enum": [
+            "PENDING",
+            "IN_PROGRESS",
+            "SYNCED",
+            "OUT_OF_SYNC",
+            "CONFLICT",
+            "FAILED",
+            "RETIRED"
+          ],
+          "valueDefinitions": "PENDING: Initial state — sync not yet attempted.\nIN_PROGRESS\nSYNCED: Successfully synced; in agreement with source.\nOUT_OF_SYNC: Source has changed; needs re-sync.\nCONFLICT: Two-way edit conflict; manual resolution needed.\nFAILED\nRETIRED: No longer being synced (record archived in source)."
+        },
+        {
+          "GUID": "f0bc5309-2f4d-5239-a5a8-23cc08d880c3",
+          "name": "sync_error_message",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Error message if last sync attempt failed.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "a292ba6e-3862-566f-8120-d1e4f36ab1ea",
+          "name": "sync_error_count",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Consecutive sync failures (for backoff/alerting).",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "8f91d085-507a-5f35-9016-ddd67ae4d267"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "5e25632f-b409-51e2-af09-9d45bbaac013",
+      "description": "A reusable value type capturing sync metadata. Application models typically embed this as a single attribute.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Application",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "Application architecture"
+    }
+  ],
+  "buckets": [
+    {
+      "name": "ApplicationShared",
+      "type": "bucket",
+      "collectionIds": [
+        "0c2033f0-3b9f-5020-8952-d497eeee1de7",
+        "0f9dc8d0-f574-5383-a5e4-4e741a76159a"
+      ],
+      "backgroundColor": {
+        "r": 0,
+        "g": 188,
+        "b": 212,
+        "a": 1
+      },
+      "show": true,
+      "isActivated": true,
+      "GUID": "5e25632f-b409-51e2-af09-9d45bbaac013",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "description": "Technical constructs shared by application models: where a record comes from in its system of record, and how it is synchronised. Technical entities: no Foundation kind."
+    }
+  ],
+  "views": [],
+  "relationships": [],
+  "users": [],
+  "diagramViews": [],
+  "idToNameHashTable": {
+    "0c2033f0-3b9f-5020-8952-d497eeee1de7": "SourceSystemReference",
+    "a7abda26-a436-506d-b8ce-a71f89d9438e": "entity_id",
+    "30f61c7e-96af-59aa-a9a6-f5f0911128a0": "source_system",
+    "9b8b9e37-935e-5bcd-b34e-6c9225215dc1": "source_record_id",
+    "6232c3c1-2c68-5def-bbda-cd6bdd0476c0": "source_record_url",
+    "d7ebddb5-5072-5bf9-8541-11a093fc1812": "authoritative",
+    "813c66db-afda-5665-9b44-d75cb2021259": "referenced_entity_type",
+    "dd5b2e1c-638e-55ff-bdc5-af7891e947a2": "referenced_entity_id",
+    "0f9dc8d0-f574-5383-a5e4-4e741a76159a": "SyncMetadata",
+    "a4b1f688-42b8-5e63-8389-1dacbd12edc6": "source_system",
+    "e31d1e55-46f0-5d3e-9cb2-6100faabf688": "source_record_id",
+    "8a9c3ceb-d8ed-5861-8ffb-94da2c49bbad": "source_record_version",
+    "766bada1-79ab-5b9e-a008-a13fb213f643": "last_synced_at",
+    "42510b1d-d7ff-50c0-b5e6-1408c29dc19f": "last_sync_attempt_at",
+    "854e43d9-fb0c-5d1c-9f19-4443f930ac12": "sync_status",
+    "f0bc5309-2f4d-5239-a5a8-23cc08d880c3": "sync_error_message",
+    "a292ba6e-3862-566f-8120-d1e4f36ab1ea": "sync_error_count",
+    "5e25632f-b409-51e2-af09-9d45bbaac013": "ApplicationShared"
+  },
+  "definitions": {
+    "type": "definitions",
+    "properties": [],
+    "GUID": "11496cf9-bb96-56bf-82be-a300b78065ee"
+  },
+  "polyglotDefinitions": {
+    "type": "polyglotDefinitions",
+    "properties": [],
+    "GUID": "3b67a21d-6fe3-5428-94c9-1efac4ee8f05"
+  },
+  "externalDefinitions": {
+    "type": "externalDefinitions",
+    "properties": [],
+    "GUID": "89467f7b-88af-5135-9c64-cc321feb5850"
+  },
+  "sources": [],
+  "decorativeSymbols": [],
+  "businessGlossaries": [],
+  "businessGlossaryTerms": [],
+  "dbVendor": "Polyglot",
+  "appTarget": "Polyglot",
+  "creationTS": "2026-10-12T12:00:00.000Z",
+  "GUID": "dc4c6e51-bf9c-5313-a7a7-1f9196352e2c",
+  "isLineageEnabled": false,
+  "polyglotModelPaths": [],
+  "lastModifTS": "2026-10-12T12:00:00.000Z",
+  "persistenceSchemaVersion": "8",
+  "isCreatedByPlugin": true,
+  "pluginInformation": {
+    "pluginName": "Polyglot",
+    "pluginVersion": "0.0.1",
+    "pluginEngineVersion": "1.0.0"
+  },
+  "applicationInformation": {
+    "version": "8.11.6"
+  },
+  "hackoladeMeta": {
+    "validationErrors": {}
+  },
+  "description": "Technical constructs shared by application models: where a record comes from in its system of record, and how it is synchronised. Technical entities: no Foundation kind.",
+  "settings": {
+    "centralPane": {
+      "dbLevel": {
+        "erd": [
+          {
+            "GUID": "0c2033f0-3b9f-5020-8952-d497eeee1de7",
+            "x": 1000,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "0f9dc8d0-f574-5383-a5e4-4e741a76159a",
+            "x": 1420,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          }
+        ],
+        "erdDefinitions": {
+          "erd": [],
+          "rootPath": [],
+          "entities": [],
+          "decorativeSymbols": []
+        },
+        "buckets": [],
+        "collapsedNodes": [],
+        "activeRelationship": "",
+        "activeRelationshipFields": {
+          "childField": [],
+          "parentField": []
+        },
+        "selectedCollections": [],
+        "displayColorPicker": false,
+        "graphView": {
+          "erd": [],
+          "buckets": [],
+          "decorativeSymbols": [],
+          "forceLayout": true,
+          "defaultLinkLength": 300
+        },
+        "diagramViews": [],
+        "decorativeSymbols": [],
+        "nestedCollectionsLayout": "horizontal",
+        "options": [],
+        "relationshipUpdateDisabled": false
+      },
+      "collectionLevel": {},
+      "changed": false
+    },
+    "dtDiagram": {
+      "collapsedNodes": [],
+      "shouldDistributeCollections": false
+    }
+  },
+  "edmBuiltBy": "migration/build.py",
+  "edmLayer": "Application"
+}

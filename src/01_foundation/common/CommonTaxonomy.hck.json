@@ -1,0 +1,1775 @@
+{
+  "modelName": "CommonTaxonomy",
+  "collections": [
+    {
+      "GUID": "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+      "collectionName": "Taxonomy",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "78d0d1fd-230b-58c7-bdb4-2123fdf60fdc",
+          "name": "taxonomy_id",
+          "isActivated": true,
+          "primaryKey": true,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Surrogate key of the taxonomy.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "childRelationships": [
+            "5e5e2880-7201-5e8f-a319-7ad1d36007c7",
+            "e6182c6d-5f6d-5a1c-a4c5-a15b7f8d7fd1",
+            "63beffa1-6b0e-526c-9bbe-4abd2e5b1b64"
+          ]
+        },
+        {
+          "GUID": "5c2402e8-e6ed-5215-bbeb-5545baba2954",
+          "name": "taxonomy_code",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Stable code of the taxonomy, for example POSITION_TYPE. Unique.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "d4c5c728-0e6a-50e8-acb5-da7de9e30b8f",
+          "name": "name",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Display name of the taxonomy.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "19fcdceb-c839-5a53-89a7-8b3a38ab8cd4",
+          "name": "description",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "What the taxonomy classifies and how it is used.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "b9ca80ad-010d-5482-8425-6040b145ea2e",
+          "name": "source_standard",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "External standard the taxonomy follows, if any (for example SOC, NAICS, ISO 3166).",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "04f72dc3-e901-5e1d-9e1b-3d37bbfc7a50",
+          "name": "owner_role",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Role accountable for the taxonomy's content.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "d395e381-bb21-55bd-b23f-6e7f6b3ac8fa",
+          "name": "status",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Whether the taxonomy is in use (for example ACTIVE, RETIRED).",
+          "type": "string",
+          "childType": "varchar"
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "8afcd39c-327c-53ae-b65f-03c9c571deae"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37759bde-1705-594e-843c-70056e5c702c",
+      "description": "One enterprise taxonomy, such as Position Type, Geography, Industry Classification or Chart of Accounts. Its nodes and versions are data in TaxonomyNode and TaxonomyVersion.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Core",
+      "steward": "EDM architecture",
+      "uniqueKey": [
+        {
+          "GUID": "25ed8074-6e13-52c3-a1ba-6e363e992989",
+          "alternateKey": true,
+          "constraintName": "taxonomy_taxonomy_code_uk",
+          "compositeUniqueKey": [
+            {
+              "keyId": "5c2402e8-e6ed-5215-bbeb-5545baba2954"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "GUID": "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25",
+      "collectionName": "TaxonomyVersion",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "435da98d-d39c-55c0-bf32-c17ea9720d4c",
+          "name": "taxonomy_version_id",
+          "isActivated": true,
+          "primaryKey": true,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Surrogate key of the version.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "childRelationships": [
+            "5f06a907-36f2-5993-9392-6fe375284492"
+          ]
+        },
+        {
+          "GUID": "bdd0f32a-264f-58ed-bd49-45b8c41a97ae",
+          "name": "taxonomy_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The taxonomy this version belongs to.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+          "foreignField": [
+            "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+            "78d0d1fd-230b-58c7-bdb4-2123fdf60fdc"
+          ],
+          "parentRelationship": "5e5e2880-7201-5e8f-a319-7ad1d36007c7"
+        },
+        {
+          "GUID": "9ac1cfe4-2f7d-56b1-8f1c-6205084e6614",
+          "name": "version_seq",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Sequence number of the version within its taxonomy (1, 2, 3...). Unique with taxonomy_id.",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "8d75d1ff-f7d6-5b13-a277-d0b2e05b99f1",
+          "name": "version_label",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Display label of the version, for example 2026.1.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "b5046fa4-0bc0-52b7-9d73-19b80d742fba",
+          "name": "status",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Publication state of the version.",
+          "type": "string",
+          "childType": "enum",
+          "enum": [
+            "DRAFT",
+            "PUBLISHED",
+            "RETIRED"
+          ],
+          "valueDefinitions": "DRAFT: Being edited; at most one per taxonomy.\nPUBLISHED: Released; never changes.\nRETIRED: No longer the current version."
+        },
+        {
+          "GUID": "5c67888e-1273-5aec-883f-d3478a11a12f",
+          "name": "effective_from",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Business date from which the version applies.",
+          "type": "string",
+          "childType": "date"
+        },
+        {
+          "GUID": "21e92413-70f7-5549-8292-d19bfdbeaff9",
+          "name": "effective_to",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Business date until which the version applies (open if empty).",
+          "type": "string",
+          "childType": "date"
+        },
+        {
+          "GUID": "eca15557-bee6-503d-a986-c1b518b97cf8",
+          "name": "published_at",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the version was published.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "48f91c1e-bbd7-5a45-9228-33fbac91f3c5",
+          "name": "published_by",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Who published the version.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "07fe3e24-f170-5abe-8f07-b027d1f5ef52",
+          "name": "based_on_version_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The version this one was started from.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        {
+          "GUID": "f5f9209c-f0a3-53c0-b878-81269b5150b4",
+          "name": "change_summary",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "What changed in this version.",
+          "type": "string",
+          "childType": "varchar"
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "ed776d70-516c-5ef7-92e4-789e5e984578"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37759bde-1705-594e-843c-70056e5c702c",
+      "description": "A named release of a taxonomy: DRAFT, PUBLISHED or RETIRED. Versions are the clock all taxonomy history is measured against. A taxonomy has at most one DRAFT version. Published versions never change; a correction is a new version.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "EDM architecture",
+      "uniqueKey": [
+        {
+          "GUID": "b1a33f96-5e66-5869-bfc6-43122a3e1d53",
+          "alternateKey": true,
+          "constraintName": "taxonomy_version_taxonomy_id_version_seq_uk",
+          "compositeUniqueKey": [
+            {
+              "keyId": "bdd0f32a-264f-58ed-bd49-45b8c41a97ae"
+            },
+            {
+              "keyId": "9ac1cfe4-2f7d-56b1-8f1c-6205084e6614"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "GUID": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+      "collectionName": "TaxonomyNode",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "016887c4-17ad-5fec-86a7-c59815d1497a",
+          "name": "node_version_id",
+          "isActivated": true,
+          "primaryKey": true,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Surrogate key of this version row of the node.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "childRelationships": [
+            "b8c5c30a-e4df-53e6-bfc8-0190cfba23b7"
+          ]
+        },
+        {
+          "GUID": "1b1fdf0e-ec51-574c-833b-0e2b55f7c4cf",
+          "name": "node_key",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Durable identity of the node across all versions.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "childRelationships": [
+            "55665c9e-9e83-5aa9-8505-4d2a1ded3a2a",
+            "8bab87b6-70ad-5bc7-bb43-a455e84c8863",
+            "bc238fde-9116-576a-8af9-9567ad5907c0"
+          ]
+        },
+        {
+          "GUID": "fbffe701-fbe2-5e64-a76a-629a6bc33f97",
+          "name": "taxonomy_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The taxonomy this node belongs to.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+          "foreignField": [
+            "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+            "78d0d1fd-230b-58c7-bdb4-2123fdf60fdc"
+          ],
+          "parentRelationship": "e6182c6d-5f6d-5a1c-a4c5-a15b7f8d7fd1"
+        },
+        {
+          "GUID": "08bb114a-71f5-5e2d-b41d-5abf0890221a",
+          "name": "node_code",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Stable code of the node within its taxonomy; used in key_path.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "99f44093-eb1e-53ad-b130-f67ba0c47b91",
+          "name": "node_label",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Display label of the node; used in label_path.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "e8e6cce5-3293-516b-a699-4173a9989f15",
+          "name": "description",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Meaning of the node.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "c5cb4c17-2a2a-5ab4-86ec-2e19ca589857",
+          "name": "parent_node_key",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "node_key of the parent node; empty for a root. The only hierarchy attribute that is edited.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "foreignField": [
+            "663a65f9-14f1-57d3-abe8-5558be7e1238",
+            "1b1fdf0e-ec51-574c-833b-0e2b55f7c4cf"
+          ],
+          "parentRelationship": "55665c9e-9e83-5aa9-8505-4d2a1ded3a2a"
+        },
+        {
+          "GUID": "6466b350-988b-581f-8351-01804286e522",
+          "name": "depth",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Distance from the root (root = 0). Derived from parent_node_key.",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "61bb7ad7-8f50-5471-a7ed-20bdb6fc457a",
+          "name": "sort_order",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Display order among siblings.",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "da3ba74d-8314-5423-b3bf-fb47aa9e1a27",
+          "name": "is_leaf",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "True when the node has no children in this version.",
+          "type": "boolean",
+          "childType": "boolean"
+        },
+        {
+          "GUID": "43a2e769-7e4a-5403-90f6-9b65f3133687",
+          "name": "key_path",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Materialised path of node codes from the root, for example TECH.ENG.SWE. Derived.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "437ae825-9a49-5d57-9caf-774cd35ce0e9",
+          "name": "label_path",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Materialised path of labels from the root, for example Technical > Engineering > Software. Derived.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "56e931f4-3ced-59c2-8c13-b279ac481fd6",
+          "name": "from_version_seq",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "First taxonomy version (version_seq) in which this row applies.",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "538e0ef2-07db-523d-bc23-0aa79c13c4ca",
+          "name": "to_version_seq",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Taxonomy version from which this row no longer applies (open if empty).",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "419cecf9-0f64-53e5-8fd5-57e986cdb637",
+          "name": "valid_from",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When this row became valid (set on publication).",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "6e822e1a-fec5-5e57-a30b-ea27d1091450",
+          "name": "valid_to",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When this row stopped being valid.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "061968ab-14df-5090-a277-bc08920213ee",
+          "name": "is_current",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "True for the row valid in the current published version.",
+          "type": "boolean",
+          "childType": "boolean"
+        },
+        {
+          "GUID": "f329e14a-80bb-54a4-bae3-1ec13a583296",
+          "name": "change_type",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Why this row was created.",
+          "type": "string",
+          "childType": "enum",
+          "enum": [
+            "CREATE",
+            "RENAME",
+            "MOVE",
+            "UPDATE",
+            "RETIRE",
+            "PATH_CASCADE"
+          ],
+          "valueDefinitions": "CREATE: New node.\nRENAME: Label changed; descendants get PATH_CASCADE rows.\nMOVE: Parent changed; closure rows of the subtree are closed and reopened.\nUPDATE: Other attribute changed.\nRETIRE: Node closed; children are moved or retired first.\nPATH_CASCADE: Path changed because an ancestor was moved or renamed."
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "e9cfe803-8174-5d4d-8f54-85cef92494dd"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37759bde-1705-594e-843c-70056e5c702c",
+      "description": "One version row of a taxonomy node (adjacency list, materialised path and SCD Type 2). node_key is the node's durable identity across all versions. Only parent_node_key is edited; depth, key_path and label_path are derived from it in the same transaction, together with the TaxonomyClosure rows. Nodes are retired, never deleted. A move into the node's own subtree is refused.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Core",
+      "steward": "EDM architecture"
+    },
+    {
+      "GUID": "94a46c3a-087f-5b56-96f6-831a992b34d6",
+      "collectionName": "TaxonomyClosure",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "a67c07b5-1eda-5ee7-8d14-59053ef314fc",
+          "name": "ancestor_node_key",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": true,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "node_key of the ancestor.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "foreignField": [
+            "663a65f9-14f1-57d3-abe8-5558be7e1238",
+            "1b1fdf0e-ec51-574c-833b-0e2b55f7c4cf"
+          ],
+          "parentRelationship": "8bab87b6-70ad-5bc7-bb43-a455e84c8863"
+        },
+        {
+          "GUID": "2f6465f0-fd08-57f0-8ab3-ae617eec1fd9",
+          "name": "descendant_node_key",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": true,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "node_key of the descendant.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "foreignField": [
+            "663a65f9-14f1-57d3-abe8-5558be7e1238",
+            "1b1fdf0e-ec51-574c-833b-0e2b55f7c4cf"
+          ],
+          "parentRelationship": "bc238fde-9116-576a-8af9-9567ad5907c0"
+        },
+        {
+          "GUID": "ed5869f1-aa28-595c-b040-aaeac81d46a2",
+          "name": "from_version_seq",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": true,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "First taxonomy version in which this pair applies.",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "ab477b8f-ecbf-5c7b-8673-110f976e5e03",
+          "name": "taxonomy_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The taxonomy both nodes belong to.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        {
+          "GUID": "8c98403a-0d1a-53ff-a13c-70e718dadeec",
+          "name": "depth",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Number of levels between ancestor and descendant (0 = the node itself).",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "74187e81-fad9-5347-a794-8dc34fa39919",
+          "name": "to_version_seq",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Taxonomy version from which this pair no longer applies (open if empty).",
+          "type": "numeric",
+          "childType": "integer",
+          "mode": "int32",
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        {
+          "GUID": "a4103fc3-5154-5f93-b34a-fffb289b82df",
+          "name": "valid_from",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When this pair became valid.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "b688d465-1d36-57f9-9b09-77331800977a",
+          "name": "valid_to",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When this pair stopped being valid.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "4ee7ea8c-74f3-5c33-a57b-48a74e466ef1",
+          "name": "is_current",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "True for pairs valid in the current published version.",
+          "type": "boolean",
+          "childType": "boolean"
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "f946aa7e-3bcc-51e1-83bf-565cb37e3b6f"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37759bde-1705-594e-843c-70056e5c702c",
+      "description": "Every ancestor-descendant pair of nodes with its depth (closure table, SCD Type 2). Derived from TaxonomyNode.parent_node_key in the same transaction as each change, never edited directly. Rows join on node_key, not on the node version row. A scheduled check rebuilds the closure from the adjacency list and compares; any difference is a defect.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "EDM architecture",
+      "primaryKey": [
+        {
+          "GUID": "e4ca8cf6-00f4-5ad3-a368-794aa9706915",
+          "constraintName": "taxonomy_closure_pk",
+          "compositePrimaryKey": [
+            {
+              "keyId": "a67c07b5-1eda-5ee7-8d14-59053ef314fc"
+            },
+            {
+              "keyId": "2f6465f0-fd08-57f0-8ab3-ae617eec1fd9"
+            },
+            {
+              "keyId": "ed5869f1-aa28-595c-b040-aaeac81d46a2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "GUID": "a34c1cff-57b4-5145-8d62-f98a15c485c7",
+      "collectionName": "TransactionHierarchy",
+      "type": "object",
+      "properties": [
+        {
+          "GUID": "a794d4ad-68eb-5050-90b9-111ab3e7cca1",
+          "name": "transaction_hierarchy_id",
+          "isActivated": true,
+          "primaryKey": true,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Surrogate key of the classification event.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        {
+          "GUID": "9f67b5e0-9c7f-5914-8c21-b95b0419ca55",
+          "name": "taxonomy_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The taxonomy used.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+          "foreignField": [
+            "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+            "78d0d1fd-230b-58c7-bdb4-2123fdf60fdc"
+          ],
+          "parentRelationship": "63beffa1-6b0e-526c-9bbe-4abd2e5b1b64"
+        },
+        {
+          "GUID": "b3206262-b5d0-51b7-861c-be2d452a7897",
+          "name": "transaction_entity",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Name of the EDM entity of the classified record, for example Position.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "1395104e-e1a5-5217-a0c6-5fa70eb3dd2a",
+          "name": "transaction_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "entity_id of the classified record.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        {
+          "GUID": "3563b5b6-962c-5cb0-a38a-4a165a713765",
+          "name": "classification_role",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Purpose of this classification.",
+          "type": "string",
+          "childType": "enum",
+          "enum": [
+            "PRIMARY",
+            "SECONDARY",
+            "REPORTING"
+          ],
+          "valueDefinitions": "PRIMARY: The record's main classification in this taxonomy.\nSECONDARY: An additional classification (for a record that belongs in two branches).\nREPORTING: A classification used only for reporting."
+        },
+        {
+          "GUID": "8854a0cf-0a8b-522c-b192-ce962ee3b913",
+          "name": "node_key",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Durable identity of the node the record was classified under.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        {
+          "GUID": "d09da633-d608-5262-8f0c-aeea0013407f",
+          "name": "node_version_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The node version row in force at classification.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "foreignField": [
+            "663a65f9-14f1-57d3-abe8-5558be7e1238",
+            "016887c4-17ad-5fec-86a7-c59815d1497a"
+          ],
+          "parentRelationship": "b8c5c30a-e4df-53e6-bfc8-0190cfba23b7"
+        },
+        {
+          "GUID": "400a3ab0-ea05-56af-a71d-b9cb7ba32202",
+          "name": "taxonomy_version_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "The taxonomy version in force at classification.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "relationshipType": "Foreign Key",
+          "foreignCollection": "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25",
+          "foreignField": [
+            "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25",
+            "435da98d-d39c-55c0-bf32-c17ea9720d4c"
+          ],
+          "parentRelationship": "5f06a907-36f2-5993-9392-6fe375284492"
+        },
+        {
+          "GUID": "b9d8cc35-3104-541a-a3d5-76d4df5bd1f7",
+          "name": "key_path_snapshot",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "key_path of the node at classification (as-was).",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "d4ebe893-e11c-5aaf-84ed-cfbd84f1b990",
+          "name": "label_path_snapshot",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "label_path of the node at classification (as-was).",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "8908937e-2f44-5811-8e08-103962f88485",
+          "name": "effective_from",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Business date from which the classification applies.",
+          "type": "string",
+          "childType": "date"
+        },
+        {
+          "GUID": "72dae126-98b7-5e9f-83e5-09cc76359716",
+          "name": "recorded_at",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": true,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "When the classification was recorded.",
+          "type": "string",
+          "childType": "timestamp_tz"
+        },
+        {
+          "GUID": "71ce8f2e-e66d-58a4-8249-f01a27519cf9",
+          "name": "recorded_by",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Who or what recorded the classification.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "30e2f4ca-a3bc-56bd-b557-a0fe22575c95",
+          "name": "source_system",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "System that supplied the classification.",
+          "type": "string",
+          "childType": "varchar"
+        },
+        {
+          "GUID": "28f768b9-899b-57c5-a82b-bd58829355ec",
+          "name": "supersedes_id",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "transaction_hierarchy_id of the row this one replaces.",
+          "type": "string",
+          "childType": "varchar",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        {
+          "GUID": "753de26c-b9c2-5e24-9525-916fef29af99",
+          "name": "reason_code",
+          "isActivated": true,
+          "primaryKey": false,
+          "required": false,
+          "compositeKey": [
+            "compositePrimaryKey",
+            "compositeUniqueKey"
+          ],
+          "compositePrimaryKey": false,
+          "compositeUniqueKey": false,
+          "error": {},
+          "description": "Why the record was classified or reclassified.",
+          "type": "string",
+          "childType": "varchar"
+        }
+      ],
+      "definitions": {
+        "type": "definitions",
+        "properties": [],
+        "GUID": "2cbf94fc-9963-5176-8f2e-3af25608fc5f"
+      },
+      "isActivated": true,
+      "additionalProperties": false,
+      "bucketId": "37759bde-1705-594e-843c-70056e5c702c",
+      "description": "Immutable history of which taxonomy node a business record was classified under, with the node version and both paths as they stood then. Append-only: no update or delete; a reclassification is a new row that supersedes the previous one. The classified record is named by transaction_entity and transaction_id, with no relationship; allowed entity names are listed in config/edm-rules.yaml. A \"transaction\" here is any classified business record, not a financial transaction.",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "layer": "Common",
+      "foundationKind": "none",
+      "entityType": "Supporting",
+      "steward": "EDM architecture"
+    }
+  ],
+  "buckets": [
+    {
+      "name": "CommonTaxonomy",
+      "type": "bucket",
+      "collectionIds": [
+        "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+        "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25",
+        "663a65f9-14f1-57d3-abe8-5558be7e1238",
+        "94a46c3a-087f-5b56-96f6-831a992b34d6",
+        "a34c1cff-57b4-5145-8d62-f98a15c485c7"
+      ],
+      "backgroundColor": {
+        "r": 0,
+        "g": 188,
+        "b": 212,
+        "a": 1
+      },
+      "show": true,
+      "isActivated": true,
+      "GUID": "37759bde-1705-594e-843c-70056e5c702c",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      },
+      "description": "The generic, versioned taxonomy model (D11). Every enterprise taxonomy is data in these five entities. It combines an adjacency list (the source of truth), a closure table, materialised paths and SCD Type 2 bounded by named versions."
+    }
+  ],
+  "views": [],
+  "relationships": [
+    {
+      "name": "fk_taxonomy_version_taxonomy_id",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+          "78d0d1fd-230b-58c7-bdb4-2123fdf60fdc"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25",
+          "bdd0f32a-264f-58ed-bd49-45b8c41a97ae"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "5e5e2880-7201-5e8f-a319-7ad1d36007c7",
+      "parentCollection": "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+      "childCollection": "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    },
+    {
+      "name": "fk_taxonomy_node_taxonomy_id",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+          "78d0d1fd-230b-58c7-bdb4-2123fdf60fdc"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "fbffe701-fbe2-5e64-a76a-629a6bc33f97"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "e6182c6d-5f6d-5a1c-a4c5-a15b7f8d7fd1",
+      "parentCollection": "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+      "childCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    },
+    {
+      "name": "fk_taxonomy_node_parent_node_key",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "1b1fdf0e-ec51-574c-833b-0e2b55f7c4cf"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "c5cb4c17-2a2a-5ab4-86ec-2e19ca589857"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "55665c9e-9e83-5aa9-8505-4d2a1ded3a2a",
+      "parentCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+      "childCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    },
+    {
+      "name": "fk_taxonomy_closure_ancestor_node_key",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "1b1fdf0e-ec51-574c-833b-0e2b55f7c4cf"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "94a46c3a-087f-5b56-96f6-831a992b34d6",
+          "a67c07b5-1eda-5ee7-8d14-59053ef314fc"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "8bab87b6-70ad-5bc7-bb43-a455e84c8863",
+      "parentCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+      "childCollection": "94a46c3a-087f-5b56-96f6-831a992b34d6",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    },
+    {
+      "name": "fk_taxonomy_closure_descendant_node_key",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "1b1fdf0e-ec51-574c-833b-0e2b55f7c4cf"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "94a46c3a-087f-5b56-96f6-831a992b34d6",
+          "2f6465f0-fd08-57f0-8ab3-ae617eec1fd9"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "bc238fde-9116-576a-8af9-9567ad5907c0",
+      "parentCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+      "childCollection": "94a46c3a-087f-5b56-96f6-831a992b34d6",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    },
+    {
+      "name": "fk_transaction_hierarchy_taxonomy_id",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+          "78d0d1fd-230b-58c7-bdb4-2123fdf60fdc"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "a34c1cff-57b4-5145-8d62-f98a15c485c7",
+          "9f67b5e0-9c7f-5914-8c21-b95b0419ca55"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "63beffa1-6b0e-526c-9bbe-4abd2e5b1b64",
+      "parentCollection": "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+      "childCollection": "a34c1cff-57b4-5145-8d62-f98a15c485c7",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    },
+    {
+      "name": "fk_transaction_hierarchy_node_version_id",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "663a65f9-14f1-57d3-abe8-5558be7e1238",
+          "016887c4-17ad-5fec-86a7-c59815d1497a"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "a34c1cff-57b4-5145-8d62-f98a15c485c7",
+          "d09da633-d608-5262-8f0c-aeea0013407f"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "b8c5c30a-e4df-53e6-bfc8-0190cfba23b7",
+      "parentCollection": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+      "childCollection": "a34c1cff-57b4-5145-8d62-f98a15c485c7",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    },
+    {
+      "name": "fk_transaction_hierarchy_taxonomy_version_id",
+      "relationshipType": "Foreign Key",
+      "parentField": [
+        [
+          "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25",
+          "435da98d-d39c-55c0-bf32-c17ea9720d4c"
+        ]
+      ],
+      "parentCardinality": "1",
+      "childField": [
+        [
+          "a34c1cff-57b4-5145-8d62-f98a15c485c7",
+          "400a3ab0-ea05-56af-a71d-b9cb7ba32202"
+        ]
+      ],
+      "isActivated": true,
+      "childCardinality": "0..n",
+      "level": "field",
+      "GUID": "5f06a907-36f2-5993-9392-6fe375284492",
+      "parentCollection": "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25",
+      "childCollection": "a34c1cff-57b4-5145-8d62-f98a15c485c7",
+      "hackoladeMeta": {
+        "validationErrors": {}
+      }
+    }
+  ],
+  "users": [],
+  "diagramViews": [],
+  "idToNameHashTable": {
+    "a494931d-4d9e-5db9-ba26-d3eb5c06511f": "Taxonomy",
+    "78d0d1fd-230b-58c7-bdb4-2123fdf60fdc": "taxonomy_id",
+    "5c2402e8-e6ed-5215-bbeb-5545baba2954": "taxonomy_code",
+    "d4c5c728-0e6a-50e8-acb5-da7de9e30b8f": "name",
+    "19fcdceb-c839-5a53-89a7-8b3a38ab8cd4": "description",
+    "b9ca80ad-010d-5482-8425-6040b145ea2e": "source_standard",
+    "04f72dc3-e901-5e1d-9e1b-3d37bbfc7a50": "owner_role",
+    "d395e381-bb21-55bd-b23f-6e7f6b3ac8fa": "status",
+    "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25": "TaxonomyVersion",
+    "435da98d-d39c-55c0-bf32-c17ea9720d4c": "taxonomy_version_id",
+    "bdd0f32a-264f-58ed-bd49-45b8c41a97ae": "taxonomy_id",
+    "9ac1cfe4-2f7d-56b1-8f1c-6205084e6614": "version_seq",
+    "8d75d1ff-f7d6-5b13-a277-d0b2e05b99f1": "version_label",
+    "b5046fa4-0bc0-52b7-9d73-19b80d742fba": "status",
+    "5c67888e-1273-5aec-883f-d3478a11a12f": "effective_from",
+    "21e92413-70f7-5549-8292-d19bfdbeaff9": "effective_to",
+    "eca15557-bee6-503d-a986-c1b518b97cf8": "published_at",
+    "48f91c1e-bbd7-5a45-9228-33fbac91f3c5": "published_by",
+    "07fe3e24-f170-5abe-8f07-b027d1f5ef52": "based_on_version_id",
+    "f5f9209c-f0a3-53c0-b878-81269b5150b4": "change_summary",
+    "663a65f9-14f1-57d3-abe8-5558be7e1238": "TaxonomyNode",
+    "016887c4-17ad-5fec-86a7-c59815d1497a": "node_version_id",
+    "1b1fdf0e-ec51-574c-833b-0e2b55f7c4cf": "node_key",
+    "fbffe701-fbe2-5e64-a76a-629a6bc33f97": "taxonomy_id",
+    "08bb114a-71f5-5e2d-b41d-5abf0890221a": "node_code",
+    "99f44093-eb1e-53ad-b130-f67ba0c47b91": "node_label",
+    "e8e6cce5-3293-516b-a699-4173a9989f15": "description",
+    "c5cb4c17-2a2a-5ab4-86ec-2e19ca589857": "parent_node_key",
+    "6466b350-988b-581f-8351-01804286e522": "depth",
+    "61bb7ad7-8f50-5471-a7ed-20bdb6fc457a": "sort_order",
+    "da3ba74d-8314-5423-b3bf-fb47aa9e1a27": "is_leaf",
+    "43a2e769-7e4a-5403-90f6-9b65f3133687": "key_path",
+    "437ae825-9a49-5d57-9caf-774cd35ce0e9": "label_path",
+    "56e931f4-3ced-59c2-8c13-b279ac481fd6": "from_version_seq",
+    "538e0ef2-07db-523d-bc23-0aa79c13c4ca": "to_version_seq",
+    "419cecf9-0f64-53e5-8fd5-57e986cdb637": "valid_from",
+    "6e822e1a-fec5-5e57-a30b-ea27d1091450": "valid_to",
+    "061968ab-14df-5090-a277-bc08920213ee": "is_current",
+    "f329e14a-80bb-54a4-bae3-1ec13a583296": "change_type",
+    "94a46c3a-087f-5b56-96f6-831a992b34d6": "TaxonomyClosure",
+    "a67c07b5-1eda-5ee7-8d14-59053ef314fc": "ancestor_node_key",
+    "2f6465f0-fd08-57f0-8ab3-ae617eec1fd9": "descendant_node_key",
+    "ed5869f1-aa28-595c-b040-aaeac81d46a2": "from_version_seq",
+    "ab477b8f-ecbf-5c7b-8673-110f976e5e03": "taxonomy_id",
+    "8c98403a-0d1a-53ff-a13c-70e718dadeec": "depth",
+    "74187e81-fad9-5347-a794-8dc34fa39919": "to_version_seq",
+    "a4103fc3-5154-5f93-b34a-fffb289b82df": "valid_from",
+    "b688d465-1d36-57f9-9b09-77331800977a": "valid_to",
+    "4ee7ea8c-74f3-5c33-a57b-48a74e466ef1": "is_current",
+    "a34c1cff-57b4-5145-8d62-f98a15c485c7": "TransactionHierarchy",
+    "a794d4ad-68eb-5050-90b9-111ab3e7cca1": "transaction_hierarchy_id",
+    "9f67b5e0-9c7f-5914-8c21-b95b0419ca55": "taxonomy_id",
+    "b3206262-b5d0-51b7-861c-be2d452a7897": "transaction_entity",
+    "1395104e-e1a5-5217-a0c6-5fa70eb3dd2a": "transaction_id",
+    "3563b5b6-962c-5cb0-a38a-4a165a713765": "classification_role",
+    "8854a0cf-0a8b-522c-b192-ce962ee3b913": "node_key",
+    "d09da633-d608-5262-8f0c-aeea0013407f": "node_version_id",
+    "400a3ab0-ea05-56af-a71d-b9cb7ba32202": "taxonomy_version_id",
+    "b9d8cc35-3104-541a-a3d5-76d4df5bd1f7": "key_path_snapshot",
+    "d4ebe893-e11c-5aaf-84ed-cfbd84f1b990": "label_path_snapshot",
+    "8908937e-2f44-5811-8e08-103962f88485": "effective_from",
+    "72dae126-98b7-5e9f-83e5-09cc76359716": "recorded_at",
+    "71ce8f2e-e66d-58a4-8249-f01a27519cf9": "recorded_by",
+    "30e2f4ca-a3bc-56bd-b557-a0fe22575c95": "source_system",
+    "28f768b9-899b-57c5-a82b-bd58829355ec": "supersedes_id",
+    "753de26c-b9c2-5e24-9525-916fef29af99": "reason_code",
+    "37759bde-1705-594e-843c-70056e5c702c": "CommonTaxonomy",
+    "5e5e2880-7201-5e8f-a319-7ad1d36007c7": "fk_taxonomy_version_taxonomy_id",
+    "e6182c6d-5f6d-5a1c-a4c5-a15b7f8d7fd1": "fk_taxonomy_node_taxonomy_id",
+    "55665c9e-9e83-5aa9-8505-4d2a1ded3a2a": "fk_taxonomy_node_parent_node_key",
+    "8bab87b6-70ad-5bc7-bb43-a455e84c8863": "fk_taxonomy_closure_ancestor_node_key",
+    "bc238fde-9116-576a-8af9-9567ad5907c0": "fk_taxonomy_closure_descendant_node_key",
+    "63beffa1-6b0e-526c-9bbe-4abd2e5b1b64": "fk_transaction_hierarchy_taxonomy_id",
+    "b8c5c30a-e4df-53e6-bfc8-0190cfba23b7": "fk_transaction_hierarchy_node_version_id",
+    "5f06a907-36f2-5993-9392-6fe375284492": "fk_transaction_hierarchy_taxonomy_version_id"
+  },
+  "definitions": {
+    "type": "definitions",
+    "properties": [],
+    "GUID": "ce99f6f2-4fe4-5373-8cd9-0442054dbe44"
+  },
+  "polyglotDefinitions": {
+    "type": "polyglotDefinitions",
+    "properties": [],
+    "GUID": "a752215b-2733-5487-b4ac-02dc6f70c6e7"
+  },
+  "externalDefinitions": {
+    "type": "externalDefinitions",
+    "properties": [],
+    "GUID": "33263b81-ed3e-56c3-8757-46e9e3324ba8"
+  },
+  "sources": [],
+  "decorativeSymbols": [],
+  "businessGlossaries": [],
+  "businessGlossaryTerms": [],
+  "dbVendor": "Polyglot",
+  "appTarget": "Polyglot",
+  "creationTS": "2026-10-12T12:00:00.000Z",
+  "GUID": "84cdb01a-ed77-51cb-853a-5f93f091ecf0",
+  "isLineageEnabled": false,
+  "polyglotModelPaths": [],
+  "lastModifTS": "2026-10-12T12:00:00.000Z",
+  "persistenceSchemaVersion": "8",
+  "isCreatedByPlugin": true,
+  "pluginInformation": {
+    "pluginName": "Polyglot",
+    "pluginVersion": "0.0.1",
+    "pluginEngineVersion": "1.0.0"
+  },
+  "applicationInformation": {
+    "version": "8.11.6"
+  },
+  "hackoladeMeta": {
+    "validationErrors": {}
+  },
+  "description": "The generic, versioned taxonomy model (D11). Every enterprise taxonomy is data in these five entities. It combines an adjacency list (the source of truth), a closure table, materialised paths and SCD Type 2 bounded by named versions.",
+  "settings": {
+    "centralPane": {
+      "dbLevel": {
+        "erd": [
+          {
+            "GUID": "a494931d-4d9e-5db9-ba26-d3eb5c06511f",
+            "x": 1000,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "5ab43143-fe00-5f0e-b9d0-da3eb59b1d25",
+            "x": 1420,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "663a65f9-14f1-57d3-abe8-5558be7e1238",
+            "x": 1840,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "94a46c3a-087f-5b56-96f6-831a992b34d6",
+            "x": 2260,
+            "y": 1000,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          },
+          {
+            "GUID": "a34c1cff-57b4-5145-8d62-f98a15c485c7",
+            "x": 1000,
+            "y": 1520,
+            "width": 360,
+            "height": 460,
+            "color": {}
+          }
+        ],
+        "erdDefinitions": {
+          "erd": [],
+          "rootPath": [],
+          "entities": [],
+          "decorativeSymbols": []
+        },
+        "buckets": [],
+        "collapsedNodes": [],
+        "activeRelationship": "",
+        "activeRelationshipFields": {
+          "childField": [],
+          "parentField": []
+        },
+        "selectedCollections": [],
+        "displayColorPicker": false,
+        "graphView": {
+          "erd": [],
+          "buckets": [],
+          "decorativeSymbols": [],
+          "forceLayout": true,
+          "defaultLinkLength": 300
+        },
+        "diagramViews": [],
+        "decorativeSymbols": [],
+        "nestedCollectionsLayout": "horizontal",
+        "options": [],
+        "relationshipUpdateDisabled": false
+      },
+      "collectionLevel": {},
+      "changed": false
+    },
+    "dtDiagram": {
+      "collapsedNodes": [],
+      "shouldDistributeCollections": false
+    }
+  },
+  "edmBuiltBy": "migration/build.py",
+  "edmLayer": "Common"
+}

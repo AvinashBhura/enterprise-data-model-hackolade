@@ -1,0 +1,4 @@
+# Hackolade target plugins this repository needs, with the minimum version.
+# CI compares this list with the output of `hck-cli version` (ci/check_plugins.py).
+# Format: <plugin name> <minimum version>
+PostgreSQL 0.2.53

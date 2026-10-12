@@ -1,0 +1,32 @@
+# Runs the Hackolade CLI image (ci/Dockerfile) on this repository.
+# Same /data + /tmp layout and runtime hardening as Hackolade's compose.hardened.yml.
+#
+#   docker compose -f ci/compose.yml build
+#   docker compose -f ci/compose.yml run --rm hck version
+#   docker compose -f ci/compose.yml run --rm hck validateKey --key="$HACKOLADE_LICENSE"
+#
+# The repository is mounted at /data/repo, which is also the working directory,
+# so model paths are the same inside and outside the container.
+
+services:
+  hck:
+    build:
+      context: ..
+      dockerfile: ci/Dockerfile
+    image: edm-hck-cli:local
+    init: true
+    restart: "no"
+    read_only: true
+    user: "1000:1001"
+    group_add: ["0"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    working_dir: /data/repo
+    volumes:
+      - hackolade-data:/data
+      - ..:/data/repo
+    tmpfs:
+      - /tmp:rw,size=1g,mode=1777
+
+volumes:
+  hackolade-data:

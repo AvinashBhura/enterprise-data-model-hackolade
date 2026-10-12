@@ -1,0 +1,46 @@
+[
+  {
+    "lowerTab": "EDM",
+    "structure": [
+      {
+        "propertyName": "EDM layer",
+        "propertyKeyword": "edmLayer",
+        "propertyType": "select",
+        "options": [
+          "",
+          "Common",
+          "Foundation",
+          "Domain",
+          "Process",
+          "Application"
+        ],
+        "propertyTooltip": "The EDM layer this model belongs to. Must match its folder (check_metadata).",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "EDM domain",
+        "propertyKeyword": "edmDomain",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Domain models: the domain, e.g. HR.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "EDM subdomain",
+        "propertyKeyword": "edmSubdomain",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Domain models: the subdomain, e.g. Talent Acquisition.",
+        "shouldValidate": false
+      },
+      {
+        "propertyName": "Built by",
+        "propertyKeyword": "edmBuiltBy",
+        "propertyType": "text",
+        "valueType": "string",
+        "propertyTooltip": "Set by the one-time builder (migration/build.py, D12). Clear it after the model is verified in Studio (docs/workflows/studio-verification.md).",
+        "shouldValidate": false
+      }
+    ]
+  }
+]
